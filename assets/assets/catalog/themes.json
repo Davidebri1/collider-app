@@ -1,0 +1,1321 @@
+{
+ "schema": 1,
+ "updated": "2026-09-29",
+ "baseUrl": "https://davidebri1.github.io/collider-media/",
+ "defaultSlug": "starbridge",
+ "themes": [
+  {
+   "slug": "tide-concrete",
+   "name": "Tide Concrete",
+   "collection": "Coastal Brutalism",
+   "creator": "Harbor Form Studio",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.tide-concrete",
+   "poster": "themes/tide-concrete/poster.webp",
+   "video": "themes/tide-concrete/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Wet Aggregate Hum",
+     "duration": "4:12",
+     "mood": "Mineral"
+    },
+    {
+     "number": 2,
+     "title": "Tide Against Pylon",
+     "duration": "3:48",
+     "mood": "Rhythmic"
+    },
+    {
+     "number": 3,
+     "title": "Salt Film on Glass",
+     "duration": "5:02",
+     "mood": "Soft"
+    },
+    {
+     "number": 4,
+     "title": "Harbor Fog Drift",
+     "duration": "4:25",
+     "mood": "Cool"
+    },
+    {
+     "number": 5,
+     "title": "Low Tide Concrete",
+     "duration": "3:55",
+     "mood": "Still"
+    }
+   ]
+  },
+  {
+   "slug": "paper-lantern-alley",
+   "name": "Paper Lantern Alley",
+   "collection": "Night Streets",
+   "creator": "Night Market Atelier",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.paper-lantern-alley",
+   "poster": "themes/paper-lantern-alley/poster.webp",
+   "video": "themes/paper-lantern-alley/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Lantern Glow Cascade",
+     "duration": "3:52",
+     "mood": "Warm Night"
+    },
+    {
+     "number": 2,
+     "title": "Alley Rain Softfall",
+     "duration": "4:18",
+     "mood": "Intimate"
+    },
+    {
+     "number": 3,
+     "title": "Paper Rustle Wind",
+     "duration": "3:35",
+     "mood": "Delicate"
+    },
+    {
+     "number": 4,
+     "title": "Distant Festival Drum",
+     "duration": "4:40",
+     "mood": "Pulse"
+    },
+    {
+     "number": 5,
+     "title": "Midnight Stall Close",
+     "duration": "3:28",
+     "mood": "Quiet"
+    }
+   ]
+  },
+  {
+   "slug": "obsidian-rain",
+   "name": "Obsidian Rain",
+   "collection": "Night Glass",
+   "creator": "Hydrophonic Labs",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.obsidian-rain",
+   "poster": "themes/obsidian-rain/poster.webp",
+   "video": "themes/obsidian-rain/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Black Glass Droplets",
+     "duration": "4:30",
+     "mood": "Dark Wet"
+    },
+    {
+     "number": 2,
+     "title": "Obsidian Pane Tremor",
+     "duration": "3:55",
+     "mood": "Focus"
+    },
+    {
+     "number": 3,
+     "title": "Night Slick Streets",
+     "duration": "4:12",
+     "mood": "Moody"
+    },
+    {
+     "number": 4,
+     "title": "Rain on Volcanic Glass",
+     "duration": "5:05",
+     "mood": "Deep"
+    },
+    {
+     "number": 5,
+     "title": "Afterstorm Silence",
+     "duration": "3:22",
+     "mood": "Still"
+    }
+   ]
+  },
+  {
+   "slug": "limestone-dust",
+   "name": "Limestone Dust",
+   "collection": "Quarry Light",
+   "creator": "Quarry Light Collective",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.limestone-dust",
+   "poster": "themes/limestone-dust/poster.webp",
+   "video": "themes/limestone-dust/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Quarry Haze",
+     "duration": "4:08",
+     "mood": "Arid Soft"
+    },
+    {
+     "number": 2,
+     "title": "Chalk Particle Drift",
+     "duration": "3:42",
+     "mood": "Granular"
+    },
+    {
+     "number": 3,
+     "title": "Sun on Cut Stone",
+     "duration": "4:35",
+     "mood": "Warm"
+    },
+    {
+     "number": 4,
+     "title": "Dust in Shaft Light",
+     "duration": "3:50",
+     "mood": "Quiet"
+    },
+    {
+     "number": 5,
+     "title": "Evening Limestone",
+     "duration": "4:18",
+     "mood": "Cooling"
+    }
+   ]
+  },
+  {
+   "slug": "glasshouse-fog",
+   "name": "Glasshouse Fog",
+   "collection": "Conservatory",
+   "creator": "Flora Sonics",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.glasshouse-fog",
+   "poster": "themes/glasshouse-fog/poster.webp",
+   "video": "themes/glasshouse-fog/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Condensation Veil",
+     "duration": "4:15",
+     "mood": "Soft Fog"
+    },
+    {
+     "number": 2,
+     "title": "Glass Rib Hum",
+     "duration": "3:48",
+     "mood": "Structural"
+    },
+    {
+     "number": 3,
+     "title": "Fern Frond Moisture",
+     "duration": "5:00",
+     "mood": "Lush"
+    },
+    {
+     "number": 4,
+     "title": "Greenhouse Dawn",
+     "duration": "3:55",
+     "mood": "Gentle"
+    },
+    {
+     "number": 5,
+     "title": "Fog Through Pane",
+     "duration": "4:20",
+     "mood": "Diffuse"
+    }
+   ]
+  },
+  {
+   "slug": "copper-kiln",
+   "name": "Copper Kiln",
+   "collection": "Forge Hours",
+   "creator": "Ignis Soundworks",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$6.99",
+   "productId": "collider.theme.copper-kiln",
+   "poster": "themes/copper-kiln/poster.webp",
+   "video": "themes/copper-kiln/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Kiln Mouth Glow",
+     "duration": "4:22",
+     "mood": "Warm Hearth"
+    },
+    {
+     "number": 2,
+     "title": "Copper Oxide Breath",
+     "duration": "3:40",
+     "mood": "Metallic Soft"
+    },
+    {
+     "number": 3,
+     "title": "Ember Bed Pulse",
+     "duration": "5:08",
+     "mood": "Low"
+    },
+    {
+     "number": 4,
+     "title": "Annealing Quiet",
+     "duration": "3:55",
+     "mood": "Intimate"
+    },
+    {
+     "number": 5,
+     "title": "Forge Night Cool",
+     "duration": "4:30",
+     "mood": "Settling"
+    }
+   ]
+  },
+  {
+   "slug": "snowmelt-atrium",
+   "name": "Snowmelt Atrium",
+   "collection": "Winter Courts",
+   "creator": "North Glass Atelier",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.snowmelt-atrium",
+   "poster": "themes/snowmelt-atrium/poster.webp",
+   "video": "themes/snowmelt-atrium/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Meltwater Trickle",
+     "duration": "4:00",
+     "mood": "Cool Clear"
+    },
+    {
+     "number": 2,
+     "title": "Atrium Ice Soften",
+     "duration": "3:45",
+     "mood": "Crystal"
+    },
+    {
+     "number": 3,
+     "title": "Stone Floor Thaw",
+     "duration": "4:28",
+     "mood": "Quiet"
+    },
+    {
+     "number": 4,
+     "title": "Skylight Snowmelt",
+     "duration": "5:05",
+     "mood": "Bright Soft"
+    },
+    {
+     "number": 5,
+     "title": "Spring Threshold",
+     "duration": "3:32",
+     "mood": "Opening"
+    }
+   ]
+  },
+  {
+   "slug": "lantern-alley",
+   "name": "Lantern Alley",
+   "collection": "Alley Series",
+   "creator": "Night Market Atelier",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$3.99",
+   "productId": "collider.theme.lantern-alley",
+   "poster": "themes/lantern-alley/poster.webp",
+   "video": "themes/lantern-alley/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Paper Glow Drift",
+     "duration": "3:40",
+     "mood": "Warm"
+    },
+    {
+     "number": 2,
+     "title": "Alley Drip Soft",
+     "duration": "4:05",
+     "mood": "Night"
+    },
+    {
+     "number": 3,
+     "title": "Lantern Sway",
+     "duration": "3:22",
+     "mood": "Gentle"
+    },
+    {
+     "number": 4,
+     "title": "Stall Whisper",
+     "duration": "4:18",
+     "mood": "Intimate"
+    },
+    {
+     "number": 5,
+     "title": "Closing Hour",
+     "duration": "3:50",
+     "mood": "Quiet"
+    }
+   ]
+  },
+  {
+   "slug": "tide-glass",
+   "name": "Tide Glass",
+   "collection": "Sea Pane",
+   "creator": "Harbor Form Studio",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.tide-glass",
+   "poster": "themes/tide-glass/poster.webp",
+   "video": "themes/tide-glass/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Glass Tide Sheet",
+     "duration": "4:08",
+     "mood": "Clear"
+    },
+    {
+     "number": 2,
+     "title": "Pane Salt Film",
+     "duration": "3:55",
+     "mood": "Cool"
+    },
+    {
+     "number": 3,
+     "title": "Refraction Drift",
+     "duration": "5:00",
+     "mood": "Soft"
+    },
+    {
+     "number": 4,
+     "title": "Harbor Light Slice",
+     "duration": "4:20",
+     "mood": "Bright"
+    },
+    {
+     "number": 5,
+     "title": "Low Tide Mirror",
+     "duration": "3:42",
+     "mood": "Still"
+    }
+   ]
+  },
+  {
+   "slug": "observatory",
+   "name": "Observatory",
+   "collection": "Dome Watch",
+   "creator": "Kepler Dynamics",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$6.99",
+   "productId": "collider.theme.observatory",
+   "poster": "themes/observatory/poster.webp",
+   "video": "themes/observatory/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Dome Rotation Soft",
+     "duration": "4:15",
+     "mood": "Mechanical"
+    },
+    {
+     "number": 2,
+     "title": "Spectrometer Hum",
+     "duration": "3:48",
+     "mood": "Focus"
+    },
+    {
+     "number": 3,
+     "title": "Deep Field Drift",
+     "duration": "5:10",
+     "mood": "Vast"
+    },
+    {
+     "number": 4,
+     "title": "Lens Atmosphere",
+     "duration": "4:02",
+     "mood": "Cool"
+    },
+    {
+     "number": 5,
+     "title": "Zenith Quiet",
+     "duration": "3:35",
+     "mood": "Solitude"
+    }
+   ]
+  },
+  {
+   "slug": "brutal-atrium",
+   "name": "Brutal Atrium",
+   "collection": "Cast Light",
+   "creator": "Form Cast Studio",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$7.99",
+   "productId": "collider.theme.brutal-atrium",
+   "poster": "themes/brutal-atrium/poster.webp",
+   "video": "themes/brutal-atrium/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Concrete Shaft Light",
+     "duration": "4:20",
+     "mood": "Hard Soft"
+    },
+    {
+     "number": 2,
+     "title": "Atrium Echo",
+     "duration": "3:52",
+     "mood": "Spacious"
+    },
+    {
+     "number": 3,
+     "title": "Cast Shadow Drift",
+     "duration": "5:00",
+     "mood": "Graphic"
+    },
+    {
+     "number": 4,
+     "title": "Stairwell Air",
+     "duration": "4:10",
+     "mood": "Cool"
+    },
+    {
+     "number": 5,
+     "title": "Evening Brutalism",
+     "duration": "3:45",
+     "mood": "Settling"
+    }
+   ]
+  },
+  {
+   "slug": "bamboo-corridor",
+   "name": "Bamboo Corridor",
+   "collection": "Bamboo Courts",
+   "creator": "Grove Path Studio",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.bamboo-corridor",
+   "poster": "themes/bamboo-corridor/poster.webp",
+   "video": "themes/bamboo-corridor/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Bamboo Shaft Whisper",
+     "duration": "4:05",
+     "mood": "Green Soft"
+    },
+    {
+     "number": 2,
+     "title": "Corridor Leaf Filter",
+     "duration": "3:48",
+     "mood": "Airy"
+    },
+    {
+     "number": 3,
+     "title": "Grove Footfall Soft",
+     "duration": "4:22",
+     "mood": "Quiet"
+    },
+    {
+     "number": 4,
+     "title": "Culm Shadow Drift",
+     "duration": "3:55",
+     "mood": "Cool"
+    },
+    {
+     "number": 5,
+     "title": "Evening Bamboo",
+     "duration": "4:10",
+     "mood": "Settling"
+    }
+   ]
+  },
+  {
+   "slug": "canopy-shafts",
+   "name": "Canopy Shafts",
+   "collection": "Forest Vault",
+   "creator": "Arbor Light Collective",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.canopy-shafts",
+   "poster": "themes/canopy-shafts/poster.webp",
+   "video": "themes/canopy-shafts/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Shaft Light Dust",
+     "duration": "4:12",
+     "mood": "Bright Soft"
+    },
+    {
+     "number": 2,
+     "title": "Canopy Wind Layers",
+     "duration": "3:50",
+     "mood": "Organic"
+    },
+    {
+     "number": 3,
+     "title": "Trunk Column Hum",
+     "duration": "5:00",
+     "mood": "Deep"
+    },
+    {
+     "number": 4,
+     "title": "Leaf Mosaic Flicker",
+     "duration": "4:05",
+     "mood": "Dappled"
+    },
+    {
+     "number": 5,
+     "title": "Grove Floor Quiet",
+     "duration": "3:38",
+     "mood": "Still"
+    }
+   ]
+  },
+  {
+   "slug": "salt-flat-dusk",
+   "name": "Salt Flat Dusk",
+   "collection": "Basin Light",
+   "creator": "Basin Horizon Works",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.salt-flat-dusk",
+   "poster": "themes/salt-flat-dusk/poster.webp",
+   "video": "themes/salt-flat-dusk/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Salt Crust Crunch Soft",
+     "duration": "4:18",
+     "mood": "Arid"
+    },
+    {
+     "number": 2,
+     "title": "Horizon Heat Fade",
+     "duration": "3:42",
+     "mood": "Warm Cool"
+    },
+    {
+     "number": 3,
+     "title": "Flat Wind Sheet",
+     "duration": "4:35",
+     "mood": "Wide"
+    },
+    {
+     "number": 4,
+     "title": "Dusk Pink Residue",
+     "duration": "5:02",
+     "mood": "Color"
+    },
+    {
+     "number": 5,
+     "title": "Night Basin Silence",
+     "duration": "3:28",
+     "mood": "Empty"
+    }
+   ]
+  },
+  {
+   "slug": "harbor-crane-night",
+   "name": "Harbor Crane Night",
+   "collection": "Port Night",
+   "creator": "Harbor Form Studio",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.harbor-crane-night",
+   "poster": "themes/harbor-crane-night/poster.webp",
+   "video": "themes/harbor-crane-night/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Crane Boom Idle",
+     "duration": "4:20",
+     "mood": "Industrial Soft"
+    },
+    {
+     "number": 2,
+     "title": "Dock Water Lap",
+     "duration": "3:55",
+     "mood": "Harbor"
+    },
+    {
+     "number": 3,
+     "title": "Sodium Yard Glow",
+     "duration": "4:40",
+     "mood": "Night"
+    },
+    {
+     "number": 4,
+     "title": "Cable Sway Soft",
+     "duration": "3:48",
+     "mood": "Mechanical"
+    },
+    {
+     "number": 5,
+     "title": "Quay Closing Hour",
+     "duration": "4:08",
+     "mood": "Quiet"
+    }
+   ]
+  },
+  {
+   "slug": "gilt-arcade",
+   "name": "Gilt Arcade",
+   "collection": "Arcade Gold",
+   "creator": "Gilded Room Atelier",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$6.99",
+   "productId": "collider.theme.gilt-arcade",
+   "poster": "themes/gilt-arcade/poster.webp",
+   "video": "themes/gilt-arcade/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Gilt Leaf Shimmer",
+     "duration": "4:00",
+     "mood": "Warm Luxe"
+    },
+    {
+     "number": 2,
+     "title": "Arcade Foot Echo",
+     "duration": "3:45",
+     "mood": "Spacious"
+    },
+    {
+     "number": 3,
+     "title": "Ornate Quiet",
+     "duration": "4:28",
+     "mood": "Intimate"
+    },
+    {
+     "number": 4,
+     "title": "Corridor Gold Dust",
+     "duration": "5:05",
+     "mood": "Soft"
+    },
+    {
+     "number": 5,
+     "title": "Evening Arcade",
+     "duration": "3:35",
+     "mood": "Settling"
+    }
+   ]
+  },
+  {
+   "slug": "indigo-dye-vat",
+   "name": "Indigo Dye Vat",
+   "collection": "Dye Yard",
+   "creator": "Indigo Works Collective",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.indigo-dye-vat",
+   "poster": "themes/indigo-dye-vat/poster.webp",
+   "video": "themes/indigo-dye-vat/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Vat Surface Still",
+     "duration": "4:15",
+     "mood": "Deep Blue"
+    },
+    {
+     "number": 2,
+     "title": "Cloth Dip Soft",
+     "duration": "3:50",
+     "mood": "Rhythmic"
+    },
+    {
+     "number": 3,
+     "title": "Indigo Steam Lift",
+     "duration": "4:32",
+     "mood": "Warm"
+    },
+    {
+     "number": 4,
+     "title": "Yard Drip Soft",
+     "duration": "3:58",
+     "mood": "Wet"
+    },
+    {
+     "number": 5,
+     "title": "Night Vat Quiet",
+     "duration": "4:20",
+     "mood": "Still"
+    }
+   ]
+  },
+  {
+   "slug": "earthen-kiln",
+   "name": "Earthen Kiln",
+   "collection": "Clay Fire",
+   "creator": "Ignis Soundworks",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$5.99",
+   "productId": "collider.theme.earthen-kiln",
+   "poster": "themes/earthen-kiln/poster.webp",
+   "video": "themes/earthen-kiln/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Kiln Mouth Ember",
+     "duration": "4:10",
+     "mood": "Warm"
+    },
+    {
+     "number": 2,
+     "title": "Clay Wall Breath",
+     "duration": "3:42",
+     "mood": "Earthy"
+    },
+    {
+     "number": 3,
+     "title": "Ash Bed Pulse",
+     "duration": "5:00",
+     "mood": "Low"
+    },
+    {
+     "number": 4,
+     "title": "Earthen Cool Down",
+     "duration": "4:05",
+     "mood": "Settling"
+    },
+    {
+     "number": 5,
+     "title": "Forge Yard Night",
+     "duration": "3:48",
+     "mood": "Quiet"
+    }
+   ]
+  },
+  {
+   "slug": "subway-platform",
+   "name": "Subway Platform",
+   "collection": "Platform Hours",
+   "creator": "Transit Acoustics",
+   "tier": "Elite 4K Live Pack",
+   "premium": true,
+   "price": "$4.99",
+   "productId": "collider.theme.subway-platform",
+   "poster": "themes/subway-platform/poster.webp",
+   "video": "themes/subway-platform/loop.mp4",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Platform Hum Soft",
+     "duration": "4:08",
+     "mood": "Urban"
+    },
+    {
+     "number": 2,
+     "title": "Distant Train Approach",
+     "duration": "3:55",
+     "mood": "Pulse"
+    },
+    {
+     "number": 3,
+     "title": "Tile Echo Footfall",
+     "duration": "4:25",
+     "mood": "Hard Soft"
+    },
+    {
+     "number": 4,
+     "title": "Tunnel Air Draft",
+     "duration": "5:02",
+     "mood": "Cool"
+    },
+    {
+     "number": 5,
+     "title": "Last Train Quiet",
+     "duration": "3:40",
+     "mood": "Empty"
+    }
+   ]
+  },
+  {
+   "slug": "visionos_living_room",
+   "name": "VisionOS Spatial Room",
+   "collection": "Spatial Ambient Series",
+   "creator": "Apple Design Lab",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/visionos_living_room/poster.webp",
+   "video": null,
+   "still": "themes/visionos_living_room/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Spatial Living Room",
+     "duration": "3:20",
+     "mood": "Domestic Calm"
+    },
+    {
+     "number": 2,
+     "title": "Window Reflection",
+     "duration": "4:02",
+     "mood": "Acoustic Glass"
+    },
+    {
+     "number": 3,
+     "title": "Morning Light Inflow",
+     "duration": "3:45",
+     "mood": "Airy"
+    },
+    {
+     "number": 4,
+     "title": "Quiet Architecture",
+     "duration": "4:30",
+     "mood": "Warm Minimal"
+    },
+    {
+     "number": 5,
+     "title": "Evening Dusk Shadow",
+     "duration": "3:12",
+     "mood": "Gentle"
+    }
+   ]
+  },
+  {
+   "slug": "starbridge",
+   "name": "Star Bridge",
+   "collection": "Spatial Ambient Series",
+   "creator": "Studio Nebula",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/starbridge/poster.webp",
+   "video": null,
+   "still": "themes/starbridge/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Bridge Over Constellations",
+     "duration": "4:12",
+     "mood": "Cosmic"
+    },
+    {
+     "number": 2,
+     "title": "Gravity Well Echo",
+     "duration": "3:38",
+     "mood": "Deep Space"
+    },
+    {
+     "number": 3,
+     "title": "Photon Stream",
+     "duration": "4:50",
+     "mood": "Flow"
+    },
+    {
+     "number": 4,
+     "title": "Starlight Traverse",
+     "duration": "3:15",
+     "mood": "Calm"
+    },
+    {
+     "number": 5,
+     "title": "Pulsar Beacons",
+     "duration": "5:02",
+     "mood": "Hypnotic"
+    }
+   ]
+  },
+  {
+   "slug": "sanctuary_free",
+   "name": "Sanctuary Still",
+   "collection": "Spatial Ambient Series",
+   "creator": "Aethelgard Audio",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/sanctuary_free/poster.webp",
+   "video": null,
+   "still": "themes/sanctuary_free/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Temple of Stillness",
+     "duration": "3:50",
+     "mood": "Serene"
+    },
+    {
+     "number": 2,
+     "title": "Candlelight Chant",
+     "duration": "4:22",
+     "mood": "Choral"
+    },
+    {
+     "number": 3,
+     "title": "Stone Vault Resonance",
+     "duration": "3:40",
+     "mood": "Deep Focus"
+    },
+    {
+     "number": 4,
+     "title": "Incense Smoke",
+     "duration": "4:05",
+     "mood": "Dream"
+    },
+    {
+     "number": 5,
+     "title": "Dawn Bell",
+     "duration": "2:45",
+     "mood": "Peaceful"
+    }
+   ]
+  },
+  {
+   "slug": "observatory_free",
+   "name": "Observatory",
+   "collection": "Spatial Ambient Series",
+   "creator": "Kepler Dynamics",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/observatory_free/poster.webp",
+   "video": null,
+   "still": "themes/observatory_free/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Dome Rotation",
+     "duration": "4:10",
+     "mood": "Mechanical Calm"
+    },
+    {
+     "number": 2,
+     "title": "Spectroscopic Drift",
+     "duration": "3:35",
+     "mood": "Scientific"
+    },
+    {
+     "number": 3,
+     "title": "Deep Sky Survey",
+     "duration": "5:12",
+     "mood": "Vast"
+    },
+    {
+     "number": 4,
+     "title": "Atmospheric Lens",
+     "duration": "3:58",
+     "mood": "Refractive"
+    },
+    {
+     "number": 5,
+     "title": "Midnight Zenith",
+     "duration": "4:20",
+     "mood": "Solitude"
+    }
+   ]
+  },
+  {
+   "slug": "ocean_free",
+   "name": "Deep Ocean Still",
+   "collection": "Spatial Ambient Series",
+   "creator": "Abyssal Sound",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/ocean_free/poster.webp",
+   "video": null,
+   "still": "themes/ocean_free/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Bioluminescent Trench",
+     "duration": "4:40",
+     "mood": "Aquatic"
+    },
+    {
+     "number": 2,
+     "title": "Currents Below 1000m",
+     "duration": "5:15",
+     "mood": "Submerged"
+    },
+    {
+     "number": 3,
+     "title": "Whale Call Distance",
+     "duration": "3:30",
+     "mood": "Echoing"
+    },
+    {
+     "number": 4,
+     "title": "Thermal Vent Pulse",
+     "duration": "4:02",
+     "mood": "Low Frequency"
+    },
+    {
+     "number": 5,
+     "title": "Surface Light Filter",
+     "duration": "3:48",
+     "mood": "Drift"
+    }
+   ]
+  },
+  {
+   "slug": "garden",
+   "name": "Ethereal Garden",
+   "collection": "Spatial Ambient Series",
+   "creator": "Flora Sonics",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/garden/poster.webp",
+   "video": null,
+   "still": "themes/garden/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Morning Dew Drops",
+     "duration": "3:15",
+     "mood": "Organic"
+    },
+    {
+     "number": 2,
+     "title": "Canopy Breeze",
+     "duration": "4:08",
+     "mood": "Whispering"
+    },
+    {
+     "number": 3,
+     "title": "Spore Bloom Drift",
+     "duration": "3:52",
+     "mood": "Lush"
+    },
+    {
+     "number": 4,
+     "title": "Moss Floor Reverberation",
+     "duration": "4:35",
+     "mood": "Earthy"
+    },
+    {
+     "number": 5,
+     "title": "Twilight Pollen",
+     "duration": "3:04",
+     "mood": "Delicate"
+    }
+   ]
+  },
+  {
+   "slug": "neoncity_free",
+   "name": "Neon City Still",
+   "collection": "Spatial Ambient Series",
+   "creator": "Synthwave Matrix",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/neoncity_free/poster.webp",
+   "video": null,
+   "still": "themes/neoncity_free/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Rain on Hologram",
+     "duration": "3:45",
+     "mood": "Cybernetic"
+    },
+    {
+     "number": 2,
+     "title": "Skyline Overpass Hum",
+     "duration": "4:20",
+     "mood": "Futuristic"
+    },
+    {
+     "number": 3,
+     "title": "Alley Neon Flicker",
+     "duration": "3:18",
+     "mood": "Moody"
+    },
+    {
+     "number": 4,
+     "title": "Autonomous Air Taxi",
+     "duration": "4:05",
+     "mood": "Smooth"
+    },
+    {
+     "number": 5,
+     "title": "Rooftop Dawn Synth",
+     "duration": "3:50",
+     "mood": "Nostalgic"
+    }
+   ]
+  },
+  {
+   "slug": "rainfall",
+   "name": "Night Rainfall",
+   "collection": "Spatial Ambient Series",
+   "creator": "Hydrophonic Labs",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/rainfall/poster.webp",
+   "video": null,
+   "still": "themes/rainfall/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Windowpane Droplets",
+     "duration": "5:00",
+     "mood": "Sleep / Focus"
+    },
+    {
+     "number": 2,
+     "title": "Distant Thunder Peal",
+     "duration": "4:15",
+     "mood": "Rolling Low"
+    },
+    {
+     "number": 3,
+     "title": "Asphalt Puddle Ripples",
+     "duration": "3:40",
+     "mood": "Steady"
+    },
+    {
+     "number": 4,
+     "title": "Roof Gutter Stream",
+     "duration": "4:30",
+     "mood": "Trickling"
+    },
+    {
+     "number": 5,
+     "title": "Storm Passing North",
+     "duration": "3:25",
+     "mood": "Peace"
+    }
+   ]
+  },
+  {
+   "slug": "transit",
+   "name": "Hyper Transit",
+   "collection": "Spatial Ambient Series",
+   "creator": "MagLev Acoustics",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/transit/poster.webp",
+   "video": null,
+   "still": "themes/transit/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Magnetic Levitation Hum",
+     "duration": "3:55",
+     "mood": "Gliding"
+    },
+    {
+     "number": 2,
+     "title": "Tunnel Light Streaks",
+     "duration": "4:12",
+     "mood": "Velocity"
+    },
+    {
+     "number": 3,
+     "title": "Station Terminal Chime",
+     "duration": "3:30",
+     "mood": "Modern"
+    },
+    {
+     "number": 4,
+     "title": "Sub-Orbital Descent",
+     "duration": "4:45",
+     "mood": "Weightless"
+    },
+    {
+     "number": 5,
+     "title": "Concourse Solitude",
+     "duration": "3:18",
+     "mood": "Spacious"
+    }
+   ]
+  },
+  {
+   "slug": "dunehall",
+   "name": "Dune Hall",
+   "collection": "Spatial Ambient Series",
+   "creator": "Arrakis Wind Collective",
+   "tier": "Free Spatial Canvas",
+   "premium": false,
+   "price": null,
+   "productId": null,
+   "poster": "themes/dunehall/poster.webp",
+   "video": null,
+   "still": "themes/dunehall/still.webp",
+   "tracks": [
+    {
+     "number": 1,
+     "title": "Desert Wind Sieve",
+     "duration": "4:30",
+     "mood": "Arid Meditation"
+    },
+    {
+     "number": 2,
+     "title": "Stone Arch Shade",
+     "duration": "3:50",
+     "mood": "Echoing"
+    },
+    {
+     "number": 3,
+     "title": "Sand Grain Shimmer",
+     "duration": "4:15",
+     "mood": "Granular"
+    },
+    {
+     "number": 4,
+     "title": "Oasis Night Air",
+     "duration": "3:40",
+     "mood": "Cooling"
+    },
+    {
+     "number": 5,
+     "title": "Caravan Mirage",
+     "duration": "5:10",
+     "mood": "Mystic"
+    }
+   ]
+  }
+ ],
+ "ambientTracks": [
+  {
+   "title": "Driftwood",
+   "audio": "tracks/ambient-01.mp3",
+   "art": "themes/tide-concrete/poster.webp"
+  },
+  {
+   "title": "Glasswing",
+   "audio": "tracks/ambient-02.mp3",
+   "art": "themes/glasshouse-fog/poster.webp"
+  },
+  {
+   "title": "Low Tide",
+   "audio": "tracks/ambient-03.mp3",
+   "art": "themes/tide-glass/poster.webp"
+  },
+  {
+   "title": "Emberfall",
+   "audio": "tracks/ambient-04.mp3",
+   "art": "themes/copper-kiln/poster.webp"
+  },
+  {
+   "title": "Lantern Hour",
+   "audio": "tracks/ambient-05.mp3",
+   "art": "themes/lantern-alley/poster.webp"
+  }
+ ]
+}
