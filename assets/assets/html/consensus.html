@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Consensus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#07080b;--bg-base:#0b0c10;--bg-elevated:#12141a;--bg-surface:rgba(255,255,255,0.04);--bg-surface-hover:rgba(255,255,255,0.08);--text-primary:#eef1f6;--text-secondary:rgba(238,241,246,0.65);--text-tertiary:rgba(238,241,246,0.4);--text-muted:rgba(238,241,246,0.25);--border-subtle:rgba(255,255,255,0.08);--border-medium:rgba(255,255,255,0.14);--border-strong:rgba(255,255,255,0.22);--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--font-sans:'Instrument Sans',system-ui,-apple-system,sans-serif;--font-mono:'IBM Plex Mono','SF Mono',monospace;--ease-out:cubic-bezier(0.2,0.8,0.2,1);--ease-spring:cubic-bezier(0.34,1.56,0.64,1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;overflow:hidden}
+body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px}
+@keyframes aurora1{0%{transform:translate(-8%,-4%) scale(1)}50%{transform:translate(6%,5%) scale(1.15)}100%{transform:translate(-8%,-4%) scale(1)}}
+@keyframes aurora2{0%{transform:translate(6%,8%) scale(1.1)}50%{transform:translate(-5%,-6%) scale(0.95)}100%{transform:translate(6%,8%) scale(1.1)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.65}}
+@keyframes breathe{0%,100%{opacity:.35;filter:brightness(1)}50%{opacity:.9;filter:brightness(1.6)}}
+.star{position:absolute;width:2px;height:2px;border-radius:1px;background:#dfe7f2;pointer-events:none;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}
+.ambient{position:absolute;inset:-20%;pointer-events:none;z-index:0}
+.ambient-1{background:radial-gradient(60% 50% at 30% 20%,rgba(60,80,140,0.28) 0%,transparent 70%);animation:aurora1 26s ease-in-out infinite}
+.ambient-2{background:radial-gradient(50% 45% at 75% 75%,rgba(70,90,130,0.22) 0%,transparent 70%);animation:aurora2 34s ease-in-out infinite}
+/* Collider Flutter: aurora drift layers disabled (no aurora visuals) */
+.ambient-1,.ambient-2{display:none}
+/* Collider Flutter: keep each sphere centred on its point. The inline float
+   animation replaces .node's transform, which dropped translate(-50%,-50%)
+   and pushed every sphere and label right/down past the phone edge. */
+.node{transform:none;translate:-50% -50%}
+.ambient-3{inset:0;background:radial-gradient(120% 90% at 50% 110%,rgba(0,0,0,0.55) 0%,transparent 55%)}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;z-index:1;overflow:hidden}
+.screen.active{display:flex}
+.screen-enter{animation:fadeUp .4s var(--ease-out) both}
+.consensus-header{display:flex;align-items:center;padding:12px 16px;flex-shrink:0;position:relative;z-index:2}
+.consensus-back{width:32px;height:32px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);color:#dfe7f2;cursor:pointer;font-size:18px;line-height:1;transition:all .2s;flex-shrink:0;-webkit-appearance:none;appearance:none;font-family:system-ui}
+.consensus-back:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.25)}
+.consensus-title{flex:1;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--text-tertiary)}
+.labels-toggle{height:24px;padding:0 10px;border-radius:12px;display:flex;align-items:center;font-family:var(--font-mono);font-size:8px;letter-spacing:1.5px;cursor:pointer;border:1px solid rgba(255,255,255,0.14);transition:all .2s;user-select:none;-webkit-appearance:none;appearance:none;color:rgba(238,241,246,0.55);background:rgba(255,255,255,0.05)}
+.labels-toggle:hover{border-color:rgba(255,255,255,0.25)}
+.labels-toggle.on{background:#e6ecf4;color:#0a0c11;border-color:#e6ecf4}
+.consensus-score-big{text-align:center;padding:4px 0 2px;flex-shrink:0;position:relative;z-index:2}
+.consensus-score-num{font-family:var(--font-mono);font-size:52px;font-weight:600;line-height:1}
+.consensus-score-num.has-score{text-shadow:0 0 40px currentColor}
+.consensus-score-sub{font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--text-tertiary);margin-top:6px}
+.consensus-summary{margin:12px 44px 0;padding:12px 16px;border-radius:14px;background:linear-gradient(165deg,rgba(255,255,255,0.06),rgba(12,14,19,0.5));border:1px solid rgba(255,255,255,0.11);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);font-size:12px;line-height:1.55;text-align:center;color:rgba(238,241,246,0.9);flex-shrink:0;position:relative;z-index:2}
+.consensus-summary.empty{color:var(--text-tertiary);font-style:italic}
+.map-tabs{display:flex;gap:6px;padding:6px 16px 0;flex-shrink:0;position:relative;z-index:2}
+.map-tab{padding:5px 10px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-family:var(--font-mono);font-size:8px;letter-spacing:1.5px;color:var(--text-tertiary);cursor:pointer;transition:all .2s;user-select:none;-webkit-appearance:none;appearance:none}
+.map-tab:hover{border-color:rgba(255,255,255,0.18)}
+.map-tab.on{background:rgba(255,255,255,0.12);color:var(--text-primary);border-color:rgba(255,255,255,0.22)}
+/* The map IS the screen. It was flex:1 in a column with the score, the
+   summary card, the tabs and a dissenter list that alone could claim 35vh —
+   so the map rendered in whatever was left, which is why it never looked like
+   the reference. Now it fills the surface and everything else floats over it.
+   Nothing was removed; the instrumentation became an overlay instead of a
+   sibling competing for height. */
+.consensus-map{position:absolute;inset:0;perspective:700px;margin:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 30%,rgba(10,12,20,0.4),rgba(2,4,12,0.92) 70%);border-radius:0;border:none;box-shadow:inset 0 0 90px rgba(2,4,12,0.7);z-index:1}
+.consensus-map-inner{position:absolute;inset:0;transform:rotateX(14deg);transform-style:preserve-3d}
+.node-link{position:absolute;height:1px;background:linear-gradient(90deg,rgba(230,236,244,0.02),var(--link-color),rgba(230,236,244,0.02));transform-origin:0 0;opacity:.5}
+/* 59.5% = band(44) — the nucleus rides the same compression as the nodes that
+   orbit it, so the centre stays the centre. Leaving it at 44% while the field
+   moved down would float it above its own orbit. */
+.node-center{position:absolute;left:50%;top:59.5%;transform:translate(-50%,-50%)}
+.node-center-bob{animation:floaty 7s ease-in-out infinite}
+/* ── The sphere is lit, not filled ──────────────────────────────────────────
+   What was here was one radial ramp (white -> hue -> near-black) plus, on the
+   nucleus, a 1.5px white border. That border is the "goofy cartoon outline":
+   nothing in a lit scene has a uniform-width stroke around it, and the design
+   reference (docs/design/collider-redesign.dc.html:152) never had one. A ramp
+   with a pure-white core and a pure-black edge also reads as a printed disc,
+   because real spheres do neither — the core keeps the body hue and the shadow
+   keeps ambient colour.
+
+   Every orb is now four stacked physical facts, composed in .orb-body:
+     1. specular  — a tight white hotspot offset from the light centre, screened
+     2. fresnel   — the shadow-side edge catching ambient light. This single
+                    layer is what makes a circle read as a ball rather than a
+                    disc; without it no amount of gradient tuning works.
+     3. diffuse   — hue-preserving falloff from the light, terminator to
+                    ambient-tinted shadow, never to black.
+     4. occlusion — an inset shadow opposite the light, plus a cast shadow.
+   .orb-bloom sits behind, larger, screen-blended, and is the emittance: light
+   that has left the surface and is in the air. Two orbs that overlap brighten,
+   which is the same additive rule SkiaEmitter enforces on native. */
+.orb{position:relative;display:flex;align-items:center;justify-content:center}
+.orb-bloom{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;mix-blend-mode:screen;z-index:0}
+.orb-body{position:relative;z-index:1;border-radius:50%;background-blend-mode:screen,screen,normal}
+.node-center-inner{position:relative}
+.node-center-label{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font-family:var(--font-mono);font-size:7px;letter-spacing:1.5px;color:var(--text-tertiary);white-space:nowrap}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px}
+.node-orb{border-radius:50%}
+.node-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:rgba(238,241,246,0.75)}
+.node-view{max-width:120px;padding:5px 8px;border-radius:8px;background:rgba(10,12,17,0.85);border:1px solid rgba(255,255,255,0.1);font-size:8.5px;line-height:1.4;color:rgba(238,241,246,0.7);text-align:center;animation:fadeUp .3s var(--ease-out) both}
+.dissenters{padding:0 16px 18px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;max-height:30vh;overflow-y:auto;position:absolute;left:0;right:0;bottom:0;z-index:3;background:linear-gradient(to top,rgba(4,6,12,0.92),rgba(4,6,12,0.55) 70%,transparent);pointer-events:auto}
+.dissenter{padding:10px 12px;border-radius:12px;background:rgba(12,14,19,0.6);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:fadeUp .4s var(--ease-out) both}
+.dissenter-header{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.dissenter-dot{width:6px;height:6px;border-radius:3px;flex-shrink:0}
+.dissenter-name{font-size:10px;font-weight:700;letter-spacing:1px}
+.dissenter-badge{margin-left:auto;font-family:var(--font-mono);font-size:8px;color:#ff6a5c}
+.dissenter-text{font-size:11px;line-height:1.5;color:var(--text-secondary)}
+.consensus-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:20px;text-align:center;color:var(--text-tertiary);font-size:11.5px;line-height:1.55;z-index:2}
+.consensus-empty .title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px}
+.stars-host{position:absolute;inset:8px 12px;pointer-events:none;z-index:1;overflow:hidden;border-radius:20px}
+@media (max-width:380px){.consensus-summary{margin:12px 20px 0}}
+</style>
+</head>
+<body>
+<div class="screen active screen-enter" id="screen-consensus">
+  <div class="consensus-header">
+    <button class="consensus-back" id="btnConsensusBack" aria-label="Close consensus">&#8249;</button>
+    <div class="consensus-title">CONSENSUS</div>
+    <button class="labels-toggle" id="btnToggleLabels">LABELS</button>
+  </div>
+  <div class="consensus-score-big">
+    <div class="consensus-score-num" id="consensusScoreNum">&ndash;/&ndash;</div>
+    <div class="consensus-score-sub">SHARE THIS READING</div>
+  </div>
+  <div class="consensus-summary empty" id="consensusSummary">Send a prompt to collide minds.</div>
+  <div class="map-tabs">
+    <button class="map-tab on" id="tabDissent" data-tab="dissent">DISSENT</button>
+    <button class="map-tab" id="tabTotal" data-tab="total">TOTAL</button>
+  </div>
+  <div class="consensus-map">
+    <div class="consensus-map-inner" id="consensusMap"></div>
+  </div>
+  <div class="dissenters" id="dissentersList"></div>
+</div>
+
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+<div class="ambient ambient-3"></div>
+<div class="stars-host" id="starsContainer"></div>
+
+<script>
+(function(){
+  'use strict';
+  var state = {
+    models: [],
+    ratioN: 0,
+    ratioM: 0,
+    hasRun: false,
+    labels: true,
+    activeTab: 'dissent',
+    summary: '',
+    nucleusSize: 14,
+    glowOpacity: 0.15,
+    glowRadius: 14,
+    tieBecause: '',
+  };
+
+  // Framework §3, constants revised 2026-08-08: size = 30 + chainDepth × 10.
+  //
+  // MUST STAY IN SYNC with sphereSize in src/services/consensusView.ts. This
+  // is a second copy of the same formula, and that duplication is why the
+  // spheres stayed tiny through an earlier fix: consensusView.ts was updated,
+  // this file renders the web scene, and only this one is on screen. The scene
+  // is a self-contained HTML string with no imports, so it cannot share the
+  // function — the least-bad option is one copy, loudly labelled.
+  //
+  // Why the constants moved: the arbiter correctly reports zero chains for
+  // short replies, so under the old 14 + n*6 the common case was every sphere
+  // at the 14px floor — a dot on a 393pt phone. The ratio §3 protects is
+  // preserved; only the floor and step rose so it can be seen.
+  // (No backticks in this file's comments — it is one big template literal,
+  // and a stray backtick ends the string. That just broke the build.)
+  function sphereSize(depth) {
+    return Math.round(30 + Math.max(0, depth || 0) * 10);
+  }
+
+  // ── Colour maths, so lighting is derived from the model's hue ──────────────
+  // The orb needs five values off one hex: a lit core, a warm shoulder, the
+  // body, a terminator, and a shadow. Hard-coding #fff and #0a0c14 at the ends
+  // (what was here) throws the hue away exactly where the eye reads curvature.
+  var AMBIENT = [5, 8, 18]; // the scene's own deep blue-black — what shadows sit in
+
+  function toRgb(hex) {
+    var h = String(hex || '#888888').trim().replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    if (h.length !== 6 || /[^0-9a-fA-F]/.test(h)) return [136, 136, 136];
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  }
+  function mixRgb(a, b, t) {
+    return [
+      Math.round(a[0] + (b[0] - a[0]) * t),
+      Math.round(a[1] + (b[1] - a[1]) * t),
+      Math.round(a[2] + (b[2] - a[2]) * t),
+    ];
+  }
+  function css(rgb, a) {
+    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (a == null ? 1 : Number(a).toFixed(3)) + ')';
+  }
+  /** Toward white, but only partway — a lit surface never fully desaturates. */
+  function lit(hex, t, a) { return css(mixRgb(toRgb(hex), [255, 255, 255], t), a); }
+  /** Toward the scene ambient, never toward black. */
+  function shade(hex, t, a) { return css(mixRgb(toRgb(hex), AMBIENT, t), a); }
+  /** The hue itself, at an opacity. */
+  function hueA(hex, a) { return css(toRgb(hex), a); }
+
+  /**
+   * A lit sphere. size in px, hue as hex, options:
+   *   gain    — emittance multiplier (1 = normal). Drives the bloom only.
+   *   spec    — specular strength 0..1
+   *   overlay — an extra background layer composited on top (the nucleus's
+   *             counter-light), inserted above the specular.
+   * Returns the inner HTML of an .orb: bloom behind, body in front.
+   */
+  function orbHtml(size, hue, opts) {
+    opts = opts || {};
+    var r = size / 2;
+    var gain = opts.gain == null ? 1 : opts.gain;
+    var specStrength = opts.spec == null ? 0.92 : opts.spec;
+
+    // ── Every radius below is explicit, and that is load-bearing ────────────
+    // A radial-gradient written "circle at X% Y%" with no size defaults to
+    // FARTHEST-CORNER, which on a square element is half the diagonal — 1.41r,
+    // not r. Every percentage stop was therefore landing 41% further out than
+    // intended: the fresnel ring at "93%" was drawn at 1.31r, entirely outside the
+    // sphere, so the one layer that makes a circle read as a ball was invisible
+    // at every size. The diffuse ramp was stretched by the same factor, which
+    // is what turned the lit core into a washed-out smear. Sizing each gradient
+    // in px against the sphere's own radius is the fix, and it makes these
+    // values identical to SkiaOrb's — one lighting model, two renderers.
+    var px = function (n) { return (r * n).toFixed(2) + 'px'; };
+
+    // Diffuse: light at 33%/27%, hue held through the midtones, shadow falling
+    // to ambient rather than black.
+    var diffuse = 'radial-gradient(circle ' + px(1.62) + ' at 33% 27%,'
+      + lit(hue, 0.72) + ' 0%,'
+      + lit(hue, 0.34) + ' 13%,'
+      + lit(hue, 0.06) + ' 30%,'
+      + shade(hue, 0.30) + ' 55%,'
+      + shade(hue, 0.68) + ' 78%,'
+      + shade(hue, 0.90) + ' 100%)';
+
+    // Fresnel rim. A CONCENTRIC ring was the first attempt and it was wrong for
+    // the same reason the border was: an even-width band all the way round is
+    // an outline, whatever colour it is. Real grazing light is weighted to the
+    // side facing AWAY from the key, and fades out well before it reaches the
+    // lit edge.
+    //
+    // The weighting is geometric, not a second mask. The ring is centred 0.15r
+    // toward the light and given radius 1.10r, so on the shadow side its peak
+    // lands at 0.95r — just inside the silhouette — while on the lit side it
+    // lands at 1.25r and is clipped away entirely by the border-radius. One
+    // gradient, no extra layer, and the arc terminates exactly where the
+    // terminator does.
+    //
+    // Kept narrow on purpose. A wide bright band on the shadow side is a sash,
+    // not a rim, and on the smallest spheres (14–32px) it swallows most of the
+    // ball and starts reading as an outline again — the exact failure this
+    // whole pass exists to remove. The lit arc has to stay a thin edge at every
+    // size the map produces.
+    //
+    // The ramp is MONOTONIC to the clip: brightest at the final stop, never
+    // peaking early and falling off again. A peak inside the silhouette leaves
+    // a dark sliver outside it, and bright-band-then-dark-edge is read as a
+    // ring — which is the outline again, drawn in light instead of ink. The
+    // geometry makes this exact: in the shadow direction the silhouette sits at
+    // 1.045 of the gradient radius, past the last stop, so CSS clamps the peak
+    // colour across the whole edge and the arc ends only where the ball does.
+    var fresnel = 'radial-gradient(circle ' + px(1.1) + ' at 42% 42%,'
+      + hueA(hue, 0) + ' 70%,'
+      + lit(hue, 0.44, 0.12) + ' 88%,'
+      + lit(hue, 0.44, 0.50) + ' 100%)';
+
+    // A hotspot, not a headlight: 0.42r across, so it stays a specular
+    // reflection instead of bleaching the whole lit hemisphere.
+    var specular = 'radial-gradient(circle ' + px(0.42) + ' at 30% 23%,'
+      + 'rgba(255,255,255,' + specStrength.toFixed(2) + ') 0%,'
+      + 'rgba(255,255,255,' + (specStrength * 0.42).toFixed(2) + ') 34%,'
+      + 'rgba(255,255,255,0) 100%)';
+
+    var layers = opts.overlay ? [specular, opts.overlay, fresnel, diffuse] : [specular, fresnel, diffuse];
+    var blend = opts.overlay ? 'screen,screen,screen,normal' : 'screen,screen,normal';
+
+    // Occlusion opposite the light + the near-field halo the bloom is too soft
+    // to supply + a cast shadow so the orb sits in the field rather than on it.
+    var shadow = [
+      'inset ' + (-r * 0.20).toFixed(1) + 'px ' + (-r * 0.28).toFixed(1) + 'px ' + (r * 0.72).toFixed(1) + 'px ' + css(AMBIENT, 0.62),
+      '0 0 ' + (r * 0.85).toFixed(1) + 'px ' + hueA(hue, Math.min(0.72, 0.5 * gain)),
+      '0 ' + (r * 0.30).toFixed(1) + 'px ' + (r * 0.9).toFixed(1) + 'px rgba(0,0,0,0.5)'
+    ].join(',');
+
+    // Emittance. Light that has left the surface: wide, soft, additive.
+    var bloomSize = Math.round(size * 3.1);
+    var bloom = 'radial-gradient(circle ' + (bloomSize / 2).toFixed(1) + 'px at 50% 50%,'
+      + hueA(hue, Math.min(0.85, 0.50 * gain)) + ' 0%,'
+      + hueA(hue, Math.min(0.45, 0.19 * gain)) + ' 22%,'
+      + hueA(hue, Math.min(0.20, 0.065 * gain)) + ' 46%,'
+      + hueA(hue, 0) + ' 72%)';
+
+    var h = '<div class="orb-bloom" style="width:' + bloomSize + 'px;height:' + bloomSize + 'px'
+      + ';background:' + bloom
+      + ';filter:blur(' + (r * 0.55).toFixed(1) + 'px)"></div>';
+    h += '<div class="orb-body" style="width:' + size + 'px;height:' + size + 'px'
+      + ';background:' + layers.join(',')
+      + ';background-blend-mode:' + blend
+      + ';box-shadow:' + shadow + '"></div>';
+    return h;
+  }
+
+  // The score-affinity force layout that lived here is gone. Position is
+  // solved once, in services/consensusView.ts, from the chain links each pair
+  // shares (Framework v3 §6) — and arrives here as x/y percentages. Re-solving
+  // it here would have been a second, disagreeing answer to the same question.
+
+  function renderStars() {
+    var c = document.getElementById('starsContainer');
+    if (!c) return;
+    var seed = function(n){ var x = Math.sin(n*999)*10000; return x - Math.floor(x); };
+    var h = '';
+    for (var i = 0; i < 26; i++) {
+      h += '<div class="star" style="left:'+(seed(i)*100).toFixed(1)+'%;top:'+(seed(i+40)*100).toFixed(1)+'%;--dur:'+(3+seed(i+80)*5).toFixed(1)+'s;--delay:'+(seed(i+120)*4).toFixed(1)+'s"></div>';
+    }
+    c.innerHTML = h;
+  }
+
+  function computePositions(models, tab) {
+    if (!models.length) return [];
+    var nodes = tab === 'dissent'
+      ? models.filter(function(m){ return !m.agree; })
+      : models;
+    // The tab filters; it never moves anything. A sphere that shifts when you
+    // switch tabs is asserting a position it did not earn.
+    //
+    // The map is deliberately full-bleed — the score, summary card and tabs
+    // float OVER it rather than sitting beside it. The cost of that is the top
+    // band is occupied, and any sphere landing there hides behind the summary.
+    // So the field is compressed into the clear area instead of the map being
+    // pushed down: relative vertical order is preserved exactly (it encodes
+    // shared-link count, per §6), every sphere stays visible, and the map keeps
+    // the whole surface. Clamped rather than scaled from the data's own range
+    // so one outlier can't squash everything else into a line.
+    var TOP = 34, BOTTOM = 92;
+    var band = function(y){
+      var v = typeof y === 'number' ? y : 44;
+      return TOP + (Math.max(0, Math.min(100, v)) / 100) * (BOTTOM - TOP);
+    };
+    return nodes.map(function(n){
+      return {
+        model: n,
+        x: typeof n.x === 'number' ? n.x : 50,
+        y: band(n.y),
+        isDissent: !n.agree,
+        unanchored: !!n.unanchored,
+      };
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function render() {
+    var sn = document.getElementById('consensusScoreNum');
+    var summary = document.getElementById('consensusSummary');
+    var map = document.getElementById('consensusMap');
+    var diss = document.getElementById('dissentersList');
+    if (!map) return;
+
+    var hasRun = state.hasRun && state.models.length > 0;
+
+    // Framework v3 §3-§4: nucleus size (deepest member's chains) and luminance
+    // (headcount) are derived once in consensusView.ts and arrive on the
+    // payload. Recomputing them here was a second source of truth for numbers
+    // that must agree exactly with the native map.
+    var nucleusPx = state.nucleusSize || sphereSize(0);
+    var consensusRatio = state.ratioM > 0 ? state.ratioN / state.ratioM : 0;
+    var nucleusGlowOpacity = Number(state.glowOpacity || 0.15).toFixed(2);
+    var nucleusGlowRadius = state.glowRadius || 14;
+
+    if (sn) {
+      sn.textContent = hasRun ? (state.ratioN + '/' + state.ratioM) : '\u2014/\u2014';
+      if (hasRun) {
+        var pct = state.ratioM ? state.ratioN / state.ratioM : 0;
+        sn.style.color = pct >= 0.66 ? '#7ee2a8' : pct >= 0.40 ? '#f5e000' : '#ff6a5c';
+        sn.classList.add('has-score');
+      } else {
+        sn.style.color = 'rgba(238,241,246,0.32)';
+        sn.classList.remove('has-score');
+      }
+    }
+
+    if (summary) {
+      if (state.summary) {
+        summary.textContent = state.summary;
+        summary.classList.remove('empty');
+      } else {
+        summary.textContent = hasRun ? 'Reading the replies\u2026' : 'Send a prompt to collide minds.';
+        summary.classList.toggle('empty', !hasRun);
+      }
+    }
+
+    // Map rendering
+    var points = computePositions(state.models, state.activeTab);
+    var h = '';
+    if (!points.length) {
+      // "No dissent / all models agree" is a FINDING. With nothing on the
+      // board it was being printed as the empty state, so an app that had run
+      // nothing reported unanimity. Agreement can only be claimed once there
+      // are claims to agree.
+      var emptyTitle = !hasRun ? 'NO DATA' : (state.activeTab === 'dissent' ? 'NO DISSENT' : 'NO MODELS');
+      var emptyBody = !hasRun
+        ? 'Send a prompt to collide minds.'
+        : (state.activeTab === 'dissent' ? 'One reading. Nothing sits outside it.' : 'Waiting for replies.');
+      h = '<div class="consensus-empty"><div class="title">'+emptyTitle+'</div><div>'+emptyBody+'</div></div>';
+    } else {
+      // Connection lines from each node to center
+      points.forEach(function(p){
+        // §6: 0 chains exerts no pull and is subject to none. Drawing a link
+        // would claim a relationship it never had.
+        if (p.unanchored) return;
+        // Must track .node-center's top (59.5% = band(44)) or every connector
+        // line points at empty space instead of the nucleus.
+        var cx = 50, cy = 59.5;
+        var pxDx = (cx - p.x) * 3.6, pxDy = (cy - p.y) * 6.6;
+        var len = Math.hypot(pxDx, pxDy).toFixed(0) + 'px';
+        var rot = (Math.atan2(pxDy, pxDx) * 180 / Math.PI).toFixed(1) + 'deg';
+        var color = p.isDissent ? 'rgba(255,100,90,0.45)' : 'rgba(120,160,240,0.4)';
+        h += '<div class="node-link" style="left:'+p.x.toFixed(2)+'%;top:'+p.y.toFixed(2)+'%;width:'+len+';transform:rotate('+rot+');--link-color:'+color+'"></div>';
+      });
+
+      // Nucleus — Framework v2 §4: sized by max chain depth, luminance by ratio.
+      //
+      // The ratio used to be spent on a border's opacity, which is the worst
+      // available channel for it: a stroke asserts an edge the object does not
+      // have, and its width does not change with agreement, so the reading was
+      // "outlined" long before it was "aligned". It now drives emittance —
+      // gain on the bloom. More agreement means the nucleus puts more light
+      // into the field, which is the same claim made physically.
+      var nucGain = 0.55 + consensusRatio * 1.15;
+      // The fused sphere keeps both hues: a blue body with red counter-light
+      // from the lower right, exactly as the design reference has it, but as a
+      // second light source rather than a flat screened smear.
+      var counter = 'radial-gradient(circle ' + (nucleusPx * 0.62).toFixed(1) + 'px at 72% 78%,'
+        + 'rgba(255,120,96,' + (0.34 + consensusRatio * 0.30).toFixed(2) + ') 0%,'
+        + 'rgba(255,90,77,' + (0.20 + consensusRatio * 0.22).toFixed(2) + ') 26%,'
+        + 'rgba(255,90,77,0) 62%)';
+      h += '<div class="node-center"><div class="node-center-bob" style="width:'+nucleusPx+'px;height:'+nucleusPx+'px">';
+      h += '<div class="node-center-inner orb" style="width:'+nucleusPx+'px;height:'+nucleusPx+'px">';
+      h += orbHtml(nucleusPx, '#3d6bd8', { gain: nucGain, spec: 0.85, overlay: counter });
+      h += '</div>';
+      h += '<div class="node-center-label">CONSENSUS</div>';
+      h += '</div></div>';
+
+      // Model spheres — Framework v2 §5: each sized by own chain depth
+      points.forEach(function(p, i){
+        var anim = i % 2 ? 'floaty2' : 'floaty';
+        var dur = (6 + i * 1.3).toFixed(1) + 's';
+        var size = Math.round(sphereSize(p.model.chainDepth || 0) * (state.sizeScale || 1));
+        // A deeper chain is a brighter source as well as a bigger one — the
+        // same quantity read twice, which is how the eye separates them at a
+        // glance without a legend.
+        var gain = 0.85 + Math.min(1.2, (p.model.chainDepth || 0) * 0.16);
+        h += '<div class="node" style="left:'+p.x.toFixed(2)+'%;top:'+p.y.toFixed(2)+'%;animation:'+anim+' '+dur+' ease-in-out infinite">';
+        h += '<div class="node-orb orb" style="width:'+size+'px;height:'+size+'px">'+orbHtml(size, p.model.color, { gain: gain })+'</div>';
+        h += '<div class="node-label">'+escapeHtml(p.model.short || p.model.id)+'</div>';
+        if (state.labels && p.model.view) {
+          h += '<div class="node-view">'+escapeHtml(p.model.view)+'</div>';
+        }
+        h += '</div>';
+      });
+    }
+    map.innerHTML = h;
+
+    if (diss) {
+      var dissModels = state.models.filter(function(m){ return !m.agree; });
+      if (dissModels.length === 0) {
+        // Same rule as the map's empty state: "full consensus achieved" is a
+        // result, and an empty board has not achieved one.
+        diss.innerHTML = !hasRun
+          ? '<div style="color:var(--text-tertiary);font-size:11px;padding:6px 4px;font-style:italic">Nothing has been collided yet.</div>'
+          : '<div style="color:var(--text-tertiary);font-size:11px;padding:6px 4px;font-style:italic">One reading. Nothing sits outside it.</div>';
+      } else {
+        diss.innerHTML = dissModels.map(function(m){
+          return '<div class="dissenter"><div class="dissenter-header"><div class="dissenter-dot" style="background:'+m.color+';box-shadow:0 0 6px '+m.color+'"></div><div class="dissenter-name">'+escapeHtml(m.label || m.id)+'</div><div class="dissenter-badge">DISSENT</div></div><div class="dissenter-text">'+escapeHtml(m.reply || '')+'</div></div>';
+        }).join('');
+      }
+    }
+
+    var tabD = document.getElementById('tabDissent');
+    if (tabD) tabD.classList.toggle('on', state.activeTab === 'dissent');
+    var tabT = document.getElementById('tabTotal');
+    if (tabT) tabT.classList.toggle('on', state.activeTab === 'total');
+
+    var lbl = document.getElementById('btnToggleLabels');
+    if (lbl) lbl.classList.toggle('on', !!state.labels);
+  }
+
+  function notify(type, payload) {
+    try {
+      var data = JSON.stringify({ type: type, payload: payload });
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage(data, '*');
+      }
+    } catch (e) { /* swallow */ }
+  }
+
+  window.ColliderConsensus = {
+    update: function(data) {
+      if (!data) return;
+      state.models = data.models || [];
+      state.ratioN = data.ratioN || 0;
+      state.ratioM = data.ratioM || 0;
+      state.hasRun = !!data.hasRun;
+      state.summary = data.summary || '';
+      state.nucleusSize = data.nucleusSize || 14;
+      state.glowOpacity = typeof data.glowOpacity === 'number' ? data.glowOpacity : 0.15;
+      state.glowRadius = typeof data.glowRadius === 'number' ? data.glowRadius : 14;
+      state.tieBecause = data.tieBecause || '';
+      state.sizeScale = typeof data.sizeScale === 'number' ? data.sizeScale : 1;
+      if (typeof data.labels === 'boolean') state.labels = data.labels;
+      if (data.activeTab === 'dissent' || data.activeTab === 'total') state.activeTab = data.activeTab;
+      render();
+    },
+    setLabels: function(v) { state.labels = !!v; render(); },
+    setTab: function(t) { if (t === 'dissent' || t === 'total') { state.activeTab = t; render(); } },
+  };
+
+  window.addEventListener('message', function(ev) {
+    if (!ev.data) return;
+    try {
+      var msg = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data;
+      if (msg && msg.type === 'update' && msg.payload && window.ColliderConsensus) {
+        window.ColliderConsensus.update(msg.payload);
+      }
+    } catch(err) {}
+  });
+
+  function bind() {
+    var bBack = document.getElementById('btnConsensusBack');
+    if (bBack) bBack.addEventListener('click', function(){ notify('close'); });
+
+    var bLbl = document.getElementById('btnToggleLabels');
+    if (bLbl) bLbl.addEventListener('click', function(){
+      state.labels = !state.labels;
+      render();
+      notify('labels', { value: state.labels });
+    });
+
+    var bDis = document.getElementById('tabDissent');
+    if (bDis) bDis.addEventListener('click', function(){
+      state.activeTab = 'dissent';
+      render();
+      notify('tab', { value: state.activeTab });
+    });
+
+    var bTot = document.getElementById('tabTotal');
+    if (bTot) bTot.addEventListener('click', function(){
+      state.activeTab = 'total';
+      render();
+      notify('tab', { value: state.activeTab });
+    });
+  }
+
+  renderStars();
+  bind();
+  render();
+})();
+</script>
+</body>
+</html>
