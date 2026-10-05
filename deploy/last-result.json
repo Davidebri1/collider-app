@@ -1,0 +1,33 @@
+{
+ "at": "2026-10-05T18:02:33Z",
+ "run": "37352936975",
+ "results": [
+  {
+   "id": "20261005T180200Z-v83",
+   "status": "applied",
+   "label": "v8.3 web",
+   "written": [
+    ".last_build_id",
+    "404.html",
+    "assets",
+    "canvaskit",
+    "favicon.png",
+    "flutter.js",
+    "flutter_bootstrap.js",
+    "flutter_service_worker.js",
+    "icons",
+    "index.html",
+    "main.dart.js",
+    "main.dart.mjs",
+    "main.dart.wasm",
+    "manifest.json",
+    "version.json"
+   ],
+   "removed": [
+    "404.html"
+   ],
+   "sha256": "d23bc9a7f7d172b7c9e8540bdbf354cf107b63c4dd886780775e79f970f54b42",
+   "size": 15291595
+  }
+ ]
+}

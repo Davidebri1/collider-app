@@ -94,7 +94,7 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
 .node-center-label{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);font-family:var(--font-mono);font-size:7px;letter-spacing:1.5px;color:var(--text-tertiary);white-space:nowrap}
 .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px}
 .node-orb{border-radius:50%}
-.node-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:rgba(238,241,246,0.75)}
+.node-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:rgba(238,241,246,0.75);max-width:96px;text-align:center;white-space:normal;overflow-wrap:break-word}
 .node-view{max-width:120px;padding:5px 8px;border-radius:8px;background:rgba(10,12,17,0.85);border:1px solid rgba(255,255,255,0.1);font-size:8.5px;line-height:1.4;color:rgba(238,241,246,0.7);text-align:center;animation:fadeUp .3s var(--ease-out) both}
 .dissenters{padding:0 16px 18px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;max-height:30vh;overflow-y:auto;position:absolute;left:0;right:0;bottom:0;z-index:3;background:linear-gradient(to top,rgba(4,6,12,0.92),rgba(4,6,12,0.55) 70%,transparent);pointer-events:auto}
 .dissenter{padding:10px 12px;border-radius:12px;background:rgba(12,14,19,0.6);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:fadeUp .4s var(--ease-out) both}
@@ -461,7 +461,7 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
         var gain = 0.85 + Math.min(1.2, (p.model.chainDepth || 0) * 0.16);
         h += '<div class="node" style="left:'+p.x.toFixed(2)+'%;top:'+p.y.toFixed(2)+'%;animation:'+anim+' '+dur+' ease-in-out infinite">';
         h += '<div class="node-orb orb" style="width:'+size+'px;height:'+size+'px">'+orbHtml(size, p.model.color, { gain: gain })+'</div>';
-        h += '<div class="node-label">'+escapeHtml(p.model.short || p.model.id)+'</div>';
+        h += '<div class="node-label">'+escapeHtml(p.model.label || p.model.id)+'</div>';
         if (state.labels && p.model.view) {
           h += '<div class="node-view">'+escapeHtml(p.model.view)+'</div>';
         }
@@ -499,6 +499,9 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
       var data = JSON.stringify({ type: type, payload: payload });
       if (window.parent && window.parent !== window) {
         window.parent.postMessage(data, '*');
+      } else if (window.FlutterBridge) {
+        // Native WebView host (iOS / Android): no parent frame.
+        window.FlutterBridge.postMessage(data);
       }
     } catch (e) { /* swallow */ }
   }
