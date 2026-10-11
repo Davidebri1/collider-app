@@ -1,0 +1,77 @@
+{
+ "version": 1,
+ "templates": [
+  {
+   "id": "meeting-notes",
+   "kind": "doc",
+   "name": "Meeting Notes",
+   "desc": "Attendees, agenda, decisions and an action table.",
+   "file": "Meeting Notes.docx",
+   "size": 9997
+  },
+  {
+   "id": "project-brief",
+   "kind": "doc",
+   "name": "Project Brief",
+   "desc": "Goals, scope, milestones, risks and sign-off.",
+   "file": "Project Brief.docx",
+   "size": 10137
+  },
+  {
+   "id": "resume",
+   "kind": "doc",
+   "name": "Résumé",
+   "desc": "One-page résumé with experience, education and skills.",
+   "file": "Resume.docx",
+   "size": 9792
+  },
+  {
+   "id": "monthly-budget",
+   "kind": "sheet",
+   "name": "Monthly Budget",
+   "desc": "Planned vs actual with live totals and % used.",
+   "file": "Monthly Budget.xlsx",
+   "size": 7212
+  },
+  {
+   "id": "loan-calculator",
+   "kind": "sheet",
+   "name": "Loan Calculator",
+   "desc": "PMT-based payment and a 60-month amortization table.",
+   "file": "Loan Calculator.xlsx",
+   "size": 8736
+  },
+  {
+   "id": "production-plan",
+   "kind": "sheet",
+   "name": "Production Plan (Solver)",
+   "desc": "A ready Solver model: the most profitable mix within wood and labour limits.",
+   "file": "Production Plan (Solver).xlsx",
+   "size": 7697
+  },
+  {
+   "id": "expense-report",
+   "kind": "form",
+   "name": "Expense Report",
+   "desc": "Fillable PDF form: items, total, receipts, notes.",
+   "file": "Expense Report.pdf",
+   "size": 6626
+  },
+  {
+   "id": "time-off",
+   "kind": "form",
+   "name": "Time-off Request",
+   "desc": "Fillable PDF form with type, dates and approval box.",
+   "file": "Time-off Request.pdf",
+   "size": 6471
+  },
+  {
+   "id": "pitch-deck",
+   "kind": "slides",
+   "name": "Pitch Deck",
+   "desc": "7 slides (16:9 PDF): edit text, annotate, reorder slides.",
+   "file": "Pitch Deck.pdf",
+   "size": 3347
+  }
+ ]
+}
