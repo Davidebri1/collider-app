@@ -1,0 +1,192 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Docs</title>
+<link rel="stylesheet" href="glass.css">
+<link rel="stylesheet" href="../vendor/quill/quill.snow.css">
+<style>
+ body{display:flex;flex-direction:column;background:rgba(28,28,30,.55)}
+ #actions{border-bottom:1px solid var(--line)}
+ .ql-toolbar.ql-snow{border:0;border-bottom:1px solid var(--line);padding:6px 8px;display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;background:transparent}
+ .ql-toolbar.ql-snow::-webkit-scrollbar{display:none}
+ .ql-toolbar.ql-snow .ql-formats{flex:none;margin-right:8px;display:flex;align-items:center}
+ .ql-snow .ql-stroke{stroke:#fff}.ql-snow .ql-fill{fill:#fff}.ql-snow .ql-picker{color:#fff}
+ .ql-snow .ql-picker-options{background:#2c2c2e;border-color:var(--line)!important;color:#fff}
+ .ql-snow.ql-toolbar button:hover .ql-stroke,.ql-snow.ql-toolbar button.ql-active .ql-stroke{stroke:#0A84FF}
+ .ql-snow.ql-toolbar button.ql-active .ql-fill{fill:#0A84FF}
+ .ql-snow .ql-picker.ql-expanded .ql-picker-label{border-color:transparent}
+ #scroll{flex:1;overflow:auto;padding:16px 10px 60px}
+ #paper{background:#fff;color:#111;max-width:816px;min-height:1056px;margin:0 auto;box-shadow:0 8px 30px rgba(0,0,0,.4);border-radius:2px}
+ #editor{border:0!important;font:15px/1.5 Calibri,Carlito,"Segoe UI",Inter,Arial,sans-serif}
+ #editor .ql-editor{padding:56px 60px;min-height:1056px}
+ @media (max-width:600px){#editor .ql-editor{padding:28px 22px}}
+ #editor table{border-collapse:collapse;width:100%}
+ #editor td{border:1px solid #999;padding:4px 6px;vertical-align:top}
+ #editor img{max-width:100%}
+ #status{padding:4px 12px;color:var(--fg3);font-size:12px;border-top:1px solid var(--line)}
+ .menu{position:fixed;z-index:50;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:180px}
+ .menu button{justify-content:flex-start}
+</style></head><body>
+<div id="actions" class="bar">
+  <button class="btn" id="openBtn">Open…</button>
+  <button class="btn" id="tableBtn">▦ Table</button>
+  <button class="btn" id="imgBtn">🖼 Image</button>
+  <span class="sep"></span>
+  <button class="btn blue" id="saveBtn">Save .docx</button>
+  <button class="btn" id="expBtn">Export…</button>
+  <input type="file" id="openLocal" accept=".docx,.txt,.md,.html,.htm" hidden>
+  <input type="file" id="imgLocal" accept="image/*" hidden>
+</div>
+<div id="toolbar">
+  <span class="ql-formats"><select class="ql-header"><option value="1">Heading 1</option><option value="2">Heading 2</option><option value="3">Heading 3</option><option selected>Normal</option></select></span>
+  <span class="ql-formats"><button class="ql-bold"></button><button class="ql-italic"></button><button class="ql-underline"></button><button class="ql-strike"></button></span>
+  <span class="ql-formats"><select class="ql-color"></select><select class="ql-background"></select></span>
+  <span class="ql-formats"><button class="ql-list" value="ordered"></button><button class="ql-list" value="bullet"></button><button class="ql-list" value="check"></button><button class="ql-indent" value="-1"></button><button class="ql-indent" value="+1"></button></span>
+  <span class="ql-formats"><select class="ql-align"></select></span>
+  <span class="ql-formats"><button class="ql-blockquote"></button><button class="ql-code-block"></button><button class="ql-link"></button><button class="ql-clean"></button></span>
+</div>
+<div id="scroll"><div id="paper"><div id="editor"></div></div></div>
+<div id="status"></div>
+<script src="bridge.js"></script>
+<script src="../vendor/quill/quill.js"></script>
+<script src="../vendor/mammoth.browser.min.js"></script>
+<script src="../vendor/docx.iife.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+let name = 'Untitled.docx';
+const quill = new Quill('#editor', { theme: 'snow', modules: { toolbar: '#toolbar', table: true, history: { delay: 600, maxStack: 200 } }, placeholder: 'Start writing…' });
+const table = quill.getModule('table');
+function count() { const t = quill.getText().trim(); const w = t ? t.split(/\s+/).length : 0; $('status').textContent = `${w} word${w === 1 ? '' : 's'} · ${t.length} characters · ${name}`; }
+quill.on('text-change', count); count();
+
+// ── menus ──
+function menu(anchor, items) {
+  document.querySelectorAll('.menu').forEach((m) => m.remove());
+  const m = document.createElement('div'); m.className = 'menu panel'; const r = anchor.getBoundingClientRect();
+  m.style.left = Math.min(r.left, innerWidth - 200) + 'px'; m.style.top = r.bottom + 6 + 'px';
+  for (const [label, fn] of items) { const b = document.createElement('button'); b.className = 'btn'; b.textContent = label; b.onclick = () => { m.remove(); fn(); }; m.appendChild(b); }
+  document.body.appendChild(m); setTimeout(() => document.addEventListener('click', function h(e) { if (!m.contains(e.target)) { m.remove(); document.removeEventListener('click', h); } }), 0);
+}
+$('tableBtn').onclick = (e) => menu(e.currentTarget, [
+  ['Insert table 3 × 3', () => { quill.focus(); table.insertTable(3, 3); }],
+  ['Row above', () => table.insertRowAbove()], ['Row below', () => table.insertRowBelow()],
+  ['Column left', () => table.insertColumnLeft()], ['Column right', () => table.insertColumnRight()],
+  ['Delete row', () => table.deleteRow()], ['Delete column', () => table.deleteColumn()], ['Delete table', () => table.deleteTable()],
+]);
+$('imgBtn').onclick = () => $('imgLocal').click();
+$('imgLocal').onchange = async (e) => { const f = e.target.files[0]; if (!f) return; const url = await new Promise((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(f); });
+  const at = (quill.getSelection(true) || { index: quill.getLength() }).index; quill.insertEmbed(at, 'image', url, 'user'); };
+$('openBtn').onclick = () => $('openLocal').click();
+$('openLocal').onchange = async (e) => { const f = e.target.files[0]; if (f) openBytes(await cBytesFromFile(f), f.name); };
+$('saveBtn').onclick = () => save('save');
+$('expBtn').onclick = (e) => menu(e.currentTarget, [['Word document (.docx)', () => save('download')], ['Web page (.html)', () => exportHtml()], ['Plain text (.txt)', () => exportTxt()]]);
+
+// ── import ──
+async function openBytes(bytes, n) {
+  name = n || name; const ext = name.split('.').pop().toLowerCase();
+  if (ext === 'docx') {
+    const r = await mammoth.convertToHtml({ arrayBuffer: bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) }, { convertImage: mammoth.images.imgElement((img) => img.read('base64').then((b) => ({ src: `data:${img.contentType};base64,${b}` }))) });
+    setHtml(r.value);
+  } else {
+    const text = new TextDecoder().decode(bytes);
+    if (ext === 'html' || ext === 'htm') setHtml(text);
+    else if (ext === 'md') setHtml(mdToHtml(text));
+    else { quill.setText(text); }
+    name = name.replace(/\.[^.]+$/, '') + '.docx';
+  }
+  quill.history.clear(); count();
+}
+function setHtml(html) {
+  quill.setContents([]);
+  quill.clipboard.dangerouslyPasteHTML(0, html, 'api');
+}
+function mdToHtml(md) {
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const inl = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/`(.+?)`/g, '<code>$1</code>');
+  const out = []; let list = null;
+  for (const line of md.split('\n')) {
+    const h = line.match(/^(#{1,3})\s+(.*)/), b = line.match(/^\s*[-*]\s+(.*)/), o = line.match(/^\s*\d+[.)]\s+(.*)/);
+    if ((b && list !== 'ul') || (o && list !== 'ol') || (!b && !o && list)) { if (list) out.push(`</${list}>`); list = b ? 'ul' : o ? 'ol' : null; if (list) out.push(`<${list}>`); }
+    if (h) out.push(`<h${h[1].length}>${inl(h[2])}</h${h[1].length}>`); else if (b || o) out.push(`<li>${inl((b || o)[1])}</li>`); else if (line.trim()) out.push(`<p>${inl(line)}</p>`); else out.push('<p><br></p>');
+  }
+  if (list) out.push(`</${list}>`); return out.join('');
+}
+
+// ── export: Quill Delta -> docx ──
+function lines(delta) {
+  const out = []; let runs = [];
+  for (const op of delta.ops) {
+    if (typeof op.insert === 'string') {
+      const parts = op.insert.split('\n');
+      parts.forEach((p, k) => { if (p) runs.push({ text: p, a: op.attributes || {} }); if (k < parts.length - 1) { out.push({ runs, a: op.attributes || {} }); runs = []; } });
+    } else if (op.insert && op.insert.image) runs.push({ image: op.insert.image, a: op.attributes || {} });
+  }
+  if (runs.length) out.push({ runs, a: {} });
+  return out;
+}
+const colorHex = (c) => { if (!c) return undefined; if (c[0] === '#') return c.slice(1).padEnd(6, '0').slice(0, 6); const m = c.match(/\d+/g); return m ? m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, '0')).join('') : undefined; };
+async function imageRun(url) {
+  const m = url.match(/^data:image\/(\w+);base64,(.*)$/); if (!m) return null;
+  const bin = atob(m[2]); const data = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) data[i] = bin.charCodeAt(i);
+  const dim = await new Promise((r) => { const im = new Image(); im.onload = () => r([im.naturalWidth, im.naturalHeight]); im.onerror = () => r([400, 300]); im.src = url; });
+  const w = Math.min(600, dim[0]); const h = Math.round(dim[1] * w / dim[0]);
+  const type = { jpeg: 'jpg', jpg: 'jpg', png: 'png', gif: 'gif', bmp: 'bmp' }[m[1]] || 'png';
+  return new docx.ImageRun({ type, data, transformation: { width: w, height: h } });
+}
+async function runsOf(line) {
+  const out = [];
+  for (const r of line.runs) {
+    if (r.image) { const im = await imageRun(r.image); if (im) out.push(im); continue; }
+    const a = r.a; const o = { text: r.text, bold: !!a.bold, italics: !!a.italic, strike: !!a.strike, color: colorHex(a.color), font: a['code-block'] || a.code ? 'Consolas' : undefined };
+    if (a.underline) o.underline = {}; if (a.background) o.shading = { type: docx.ShadingType.CLEAR, fill: colorHex(a.background), color: 'auto' };
+    if (a.link) out.push(new docx.ExternalHyperlink({ link: a.link, children: [new docx.TextRun({ ...o, style: 'Hyperlink' })] }));
+    else out.push(new docx.TextRun(o));
+  }
+  return out;
+}
+async function para(line) {
+  const a = line.a || {}; const children = await runsOf(line); const o = { children };
+  if (a.header) o.heading = [docx.HeadingLevel.HEADING_1, docx.HeadingLevel.HEADING_2, docx.HeadingLevel.HEADING_3][a.header - 1];
+  if (a.align) o.alignment = { center: docx.AlignmentType.CENTER, right: docx.AlignmentType.RIGHT, justify: docx.AlignmentType.JUSTIFIED }[a.align];
+  const lvl = a.indent || 0;
+  if (a.list === 'ordered') o.numbering = { reference: 'num', level: lvl };
+  else if (a.list === 'bullet') o.bullet = { level: lvl };
+  else if (a.list === 'checked' || a.list === 'unchecked') { children.unshift(new docx.TextRun({ text: a.list === 'checked' ? '☑ ' : '☐ ' })); o.indent = { left: 360 * (lvl + 1) }; }
+  else if (lvl) o.indent = { left: 720 * lvl };
+  if (a.blockquote) { o.indent = { left: 567 }; o.border = { left: { style: docx.BorderStyle.SINGLE, size: 12, color: 'BBBBBB', space: 8 } }; }
+  if (a['code-block']) o.shading = { type: docx.ShadingType.CLEAR, fill: 'F2F2F2', color: 'auto' };
+  return new docx.Paragraph(o);
+}
+async function buildDocx() {
+  const ls = lines(quill.getContents()); const body = [];
+  for (let i = 0; i < ls.length; i++) {
+    const l = ls[i];
+    if (l.a.table) {
+      const rows = []; let curId = null, cur = null;
+      while (i < ls.length && ls[i].a.table) { const t = ls[i].a.table; if (t !== curId) { cur = []; rows.push(cur); curId = t; } cur.push(ls[i]); i++; }
+      i--;
+      const cols = Math.max(...rows.map((r) => r.length));
+      const tRows = [];
+      for (const r of rows) { const cells = []; for (let c = 0; c < cols; c++) cells.push(new docx.TableCell({ children: [r[c] ? await para({ runs: r[c].runs, a: {} }) : new docx.Paragraph('')], width: { size: Math.floor(9000 / cols), type: docx.WidthType.DXA } })); tRows.push(new docx.TableRow({ children: cells })); }
+      body.push(new docx.Table({ rows: tRows, width: { size: 9000, type: docx.WidthType.DXA } }));
+    } else body.push(await para(l));
+  }
+  const levels = [0, 1, 2, 3, 4].map((lv) => ({ level: lv, format: [docx.LevelFormat.DECIMAL, docx.LevelFormat.LOWER_LETTER, docx.LevelFormat.LOWER_ROMAN, docx.LevelFormat.DECIMAL, docx.LevelFormat.LOWER_LETTER][lv], text: `%${lv + 1}.`, alignment: docx.AlignmentType.START, style: { paragraph: { indent: { left: 720 * (lv + 1), hanging: 360 } } } }));
+  const d = new docx.Document({ creator: 'Collider', styles: { default: { document: { run: { font: 'Calibri', size: 22 } } } }, numbering: { config: [{ reference: 'num', levels }] }, sections: [{ children: body }] });
+  const blob = await docx.Packer.toBlob(d); return new Uint8Array(await blob.arrayBuffer());
+}
+async function save(kind) {
+  try { const bytes = await buildDocx(); const mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    if (!/\.docx$/i.test(name)) name = name.replace(/\.[^.]*$/, '') + '.docx';
+    kind === 'download' ? ColliderBridge.download(name, mime, bytes) : ColliderBridge.save(name, mime, bytes);
+    if (window.parent === window) cDownloadLocal(name, mime, bytes);
+    cToast(kind === 'download' ? 'Exported' : 'Saved to Files'); return bytes;
+  } catch (e) { console.error(e); cToast('Could not save: ' + e.message); }
+}
+function exportHtml() { const html = `<!doctype html><meta charset="utf-8"><title>${name}</title><body style="max-width:760px;margin:40px auto;font-family:Calibri,Arial">${quill.getSemanticHTML()}</body>`;
+  ColliderBridge.download(name.replace(/\.docx$/i, '.html'), 'text/html', new TextEncoder().encode(html)); cToast('Exported'); }
+function exportTxt() { ColliderBridge.download(name.replace(/\.docx$/i, '.txt'), 'text/plain', new TextEncoder().encode(quill.getText())); cToast('Exported'); }
+ColliderBridge.on('open', (d) => openBytes(new Uint8Array(d.bytes), d.name));
+ColliderBridge.on('new', (d) => { name = d.name || 'Untitled.docx'; quill.setContents([]); count(); });
+ColliderBridge.on('request', (d) => save(d.what === 'export' ? 'download' : 'save'));
+window.__doc = { quill, buildDocx, openBytes };
+</script></body></html>

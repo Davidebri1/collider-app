@@ -1,0 +1,54 @@
+# Collider app deploy: publishes a Flutter web build zip staged in Google Drive.
+# The box adds deploy/requests/<id>.json (text only) through a PR; this job downloads the zip
+# from its public Drive link, checks size + sha256, replaces the Flutter build files at the
+# repo root with the zip's contents (keeps .nojekyll, .github/, deploy/, and other non-build
+# files), sets 404.html = index.html, and commits as github-actions[bot]. Pages then redeploys.
+name: Collider app deploy
+
+on:
+  push:
+    branches: [main]
+    paths: ['deploy/requests/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: collider-app-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Apply deploy requests
+        id: apply
+        run: python3 .github/deploy/apply.py
+      - name: Commit and push
+        if: steps.apply.outputs.changed == 'true'
+        env:
+          MSG: ${{ steps.apply.outputs.message }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -q -m "$MSG"
+          for i in 1 2 3; do git push origin HEAD:main && break; git pull --rebase -q origin main; done
+      - name: Request a Pages build
+        if: steps.apply.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+      - name: Fail if a request was rejected
+        if: steps.apply.outputs.rejected == 'true'
+        run: |
+          cat deploy/last-result.json
+          exit 1
