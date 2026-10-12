@@ -31,6 +31,8 @@
 
   <title>Collider</title>
   <link rel="manifest" href="manifest.json">
+  <!-- v8.6 single video fix: give every <video> its own GPU compositing layer so the decoder frames are not torn when Flutter repaints over them. -->
+  <style>video{transform:translateZ(0);will-change:transform;backface-visibility:hidden;}</style>
 </head>
 <body>
   <!--
