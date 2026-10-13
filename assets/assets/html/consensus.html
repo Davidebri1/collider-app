@@ -20,9 +20,7 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes twinkle{0%,100%{opacity:.12}50%{opacity:.65}}
 @keyframes breathe{0%,100%{opacity:.35;filter:brightness(1)}50%{opacity:.9;filter:brightness(1.6)}}
-.star{position:absolute;width:2px;height:2px;border-radius:1px;background:#dfe7f2;pointer-events:none;animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay)}
 .ambient{position:absolute;inset:-20%;pointer-events:none;z-index:0}
 .ambient-1{background:radial-gradient(60% 50% at 30% 20%,rgba(60,80,140,0.28) 0%,transparent 70%);animation:aurora1 26s ease-in-out infinite}
 .ambient-2{background:radial-gradient(50% 45% at 75% 75%,rgba(70,90,130,0.22) 0%,transparent 70%);animation:aurora2 34s ease-in-out infinite}
@@ -49,17 +47,12 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
 .consensus-score-sub{font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--text-tertiary);margin-top:6px}
 .consensus-summary{margin:12px 44px 0;padding:12px 16px;border-radius:14px;background:linear-gradient(165deg,rgba(255,255,255,0.06),rgba(12,14,19,0.5));border:1px solid rgba(255,255,255,0.11);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);font-size:12px;line-height:1.55;text-align:center;color:rgba(238,241,246,0.9);flex-shrink:0;position:relative;z-index:2}
 .consensus-summary.empty{color:var(--text-tertiary);font-style:italic}
-.map-tabs{display:flex;gap:6px;padding:6px 16px 0;flex-shrink:0;position:relative;z-index:2}
-.map-tab{padding:5px 10px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-family:var(--font-mono);font-size:8px;letter-spacing:1.5px;color:var(--text-tertiary);cursor:pointer;transition:all .2s;user-select:none;-webkit-appearance:none;appearance:none}
-.map-tab:hover{border-color:rgba(255,255,255,0.18)}
-.map-tab.on{background:rgba(255,255,255,0.12);color:var(--text-primary);border-color:rgba(255,255,255,0.22)}
-/* The map IS the screen. It was flex:1 in a column with the score, the
-   summary card, the tabs and a dissenter list that alone could claim 35vh —
-   so the map rendered in whatever was left, which is why it never looked like
-   the reference. Now it fills the surface and everything else floats over it.
-   Nothing was removed; the instrumentation became an overlay instead of a
-   sibling competing for height. */
-.consensus-map{position:absolute;inset:0;perspective:700px;margin:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 30%,rgba(10,12,20,0.4),rgba(2,4,12,0.92) 70%);border-radius:0;border:none;box-shadow:inset 0 0 90px rgba(2,4,12,0.7);z-index:1}
+.map-tabs{display:none}
+/* The map floats as an inset panel: the score and the summary sit above it in
+   their own band, and the panel is inset on every side so nothing touches an
+   edge. It was inset:0 with everything floating OVER it, which put spheres
+   behind the summary card and let the field run to all four edges. */
+.consensus-map{position:absolute;inset:104px 14px 14px;perspective:700px;margin:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 30%,rgba(10,12,20,0.4),rgba(2,4,12,0.92) 70%);border-radius:22px;border:1px solid rgba(255,255,255,0.07);box-shadow:inset 0 0 90px rgba(2,4,12,0.7);z-index:1}
 .consensus-map-inner{position:absolute;inset:0;transform:rotateX(14deg);transform-style:preserve-3d}
 .node-link{position:absolute;height:1px;background:linear-gradient(90deg,rgba(230,236,244,0.02),var(--link-color),rgba(230,236,244,0.02));transform-origin:0 0;opacity:.5}
 /* 59.5% = band(44) — the nucleus rides the same compression as the nodes that
@@ -96,16 +89,8 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
 .node-orb{border-radius:50%}
 .node-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;color:rgba(238,241,246,0.75);max-width:96px;text-align:center;white-space:normal;overflow-wrap:break-word}
 .node-view{max-width:120px;padding:5px 8px;border-radius:8px;background:rgba(10,12,17,0.85);border:1px solid rgba(255,255,255,0.1);font-size:8.5px;line-height:1.4;color:rgba(238,241,246,0.7);text-align:center;animation:fadeUp .3s var(--ease-out) both}
-.dissenters{padding:0 16px 18px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;max-height:30vh;overflow-y:auto;position:absolute;left:0;right:0;bottom:0;z-index:3;background:linear-gradient(to top,rgba(4,6,12,0.92),rgba(4,6,12,0.55) 70%,transparent);pointer-events:auto}
-.dissenter{padding:10px 12px;border-radius:12px;background:rgba(12,14,19,0.6);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:fadeUp .4s var(--ease-out) both}
-.dissenter-header{display:flex;align-items:center;gap:7px;margin-bottom:3px}
-.dissenter-dot{width:6px;height:6px;border-radius:3px;flex-shrink:0}
-.dissenter-name{font-size:10px;font-weight:700;letter-spacing:1px}
-.dissenter-badge{margin-left:auto;font-family:var(--font-mono);font-size:8px;color:#ff6a5c}
-.dissenter-text{font-size:11px;line-height:1.5;color:var(--text-secondary)}
 .consensus-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:20px;text-align:center;color:var(--text-tertiary);font-size:11.5px;line-height:1.55;z-index:2}
 .consensus-empty .title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px}
-.stars-host{position:absolute;inset:8px 12px;pointer-events:none;z-index:1;overflow:hidden;border-radius:20px}
 @media (max-width:380px){.consensus-summary{margin:12px 20px 0}}
 </style>
 </head>
@@ -121,20 +106,14 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
     <div class="consensus-score-sub">SHARE THIS READING</div>
   </div>
   <div class="consensus-summary empty" id="consensusSummary">Send a prompt to collide minds.</div>
-  <div class="map-tabs">
-    <button class="map-tab on" id="tabDissent" data-tab="dissent">DISSENT</button>
-    <button class="map-tab" id="tabTotal" data-tab="total">TOTAL</button>
-  </div>
   <div class="consensus-map">
     <div class="consensus-map-inner" id="consensusMap"></div>
   </div>
-  <div class="dissenters" id="dissentersList"></div>
 </div>
 
 <div class="ambient ambient-1"></div>
 <div class="ambient ambient-2"></div>
 <div class="ambient ambient-3"></div>
-<div class="stars-host" id="starsContainer"></div>
 
 <script>
 (function(){
@@ -143,14 +122,17 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
     models: [],
     ratioN: 0,
     ratioM: 0,
+    score: '',
+    complete: false,
+    consensusChains: 0,
+    consensusMaxChain: 0,
+    excluded: [],
     hasRun: false,
     labels: true,
-    activeTab: 'dissent',
     summary: '',
     nucleusSize: 14,
     glowOpacity: 0.15,
     glowRadius: 14,
-    tieBecause: '',
   };
 
   // Framework §3, constants revised 2026-08-08: size = 30 + chainDepth × 10.
@@ -309,33 +291,19 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
   // shares (Framework v3 §6) — and arrives here as x/y percentages. Re-solving
   // it here would have been a second, disagreeing answer to the same question.
 
-  function renderStars() {
-    var c = document.getElementById('starsContainer');
-    if (!c) return;
-    var seed = function(n){ var x = Math.sin(n*999)*10000; return x - Math.floor(x); };
-    var h = '';
-    for (var i = 0; i < 26; i++) {
-      h += '<div class="star" style="left:'+(seed(i)*100).toFixed(1)+'%;top:'+(seed(i+40)*100).toFixed(1)+'%;--dur:'+(3+seed(i+80)*5).toFixed(1)+'s;--delay:'+(seed(i+120)*4).toFixed(1)+'s"></div>';
-    }
-    c.innerHTML = h;
-  }
-
-  function computePositions(models, tab) {
+  function computePositions(models) {
     if (!models.length) return [];
-    var nodes = tab === 'dissent'
-      ? models.filter(function(m){ return !m.agree; })
-      : models;
-    // The tab filters; it never moves anything. A sphere that shifts when you
-    // switch tabs is asserting a position it did not earn.
+    var nodes = models;
+    // Every model that answered is on the map, including the ones the owner
+    // excluded from the shared send (R41). Exclusion changes how a model is
+    // marked, never whether it is shown.
     //
-    // The map is deliberately full-bleed — the score, summary card and tabs
-    // float OVER it rather than sitting beside it. The cost of that is the top
-    // band is occupied, and any sphere landing there hides behind the summary.
-    // So the field is compressed into the clear area instead of the map being
-    // pushed down: relative vertical order is preserved exactly (it encodes
-    // shared-link count, per §6), every sphere stays visible, and the map keeps
-    // the whole surface. Clamped rather than scaled from the data's own range
-    // so one outlier can't squash everything else into a line.
+    // The map is inset, not full-bleed: the score and the summary sit in their
+    // own band above it and no element touches an edge. The field is compressed
+    // into the clear area so no sphere hides behind the summary, and relative
+    // vertical order is preserved exactly (it encodes shared-link count).
+    // Clamped rather than scaled from the data's own range so one outlier can't
+    // squash everything else into a line.
     var TOP = 34, BOTTOM = 92;
     var band = function(y){
       var v = typeof y === 'number' ? y : 44;
@@ -346,7 +314,7 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
         model: n,
         x: typeof n.x === 'number' ? n.x : 50,
         y: band(n.y),
-        isDissent: !n.agree,
+        inConsensus: !!n.agree,
         unanchored: !!n.unanchored,
       };
     });
@@ -362,7 +330,6 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
     var sn = document.getElementById('consensusScoreNum');
     var summary = document.getElementById('consensusSummary');
     var map = document.getElementById('consensusMap');
-    var diss = document.getElementById('dissentersList');
     if (!map) return;
 
     var hasRun = state.hasRun && state.models.length > 0;
@@ -377,12 +344,15 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
     var nucleusGlowRadius = state.glowRadius || 14;
 
     if (sn) {
-      sn.textContent = hasRun ? (state.ratioN + '/' + state.ratioM) : '\u2014/\u2014';
-      if (hasRun) {
+      // R17: a finished shared send shows a count. An unfinished one shows an
+      // empty score — no dash pair, no percent, no partial wording.
+      if (hasRun && state.score) {
+        sn.textContent = state.score;
         var pct = state.ratioM ? state.ratioN / state.ratioM : 0;
         sn.style.color = pct >= 0.66 ? '#7ee2a8' : pct >= 0.40 ? '#f5e000' : '#ff6a5c';
         sn.classList.add('has-score');
       } else {
+        sn.textContent = '';
         sn.style.color = 'rgba(238,241,246,0.32)';
         sn.classList.remove('has-score');
       }
@@ -393,23 +363,21 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
         summary.textContent = state.summary;
         summary.classList.remove('empty');
       } else {
-        summary.textContent = hasRun ? 'Reading the replies\u2026' : 'Send a prompt to collide minds.';
+        // R17: an unfinished shared send shows an empty score and says nothing.
+        // "Reading the replies…" was a waiting line, which R17 forbids.
+        summary.textContent = hasRun ? '' : 'Send a message to collide minds.';
         summary.classList.toggle('empty', !hasRun);
       }
     }
 
     // Map rendering
-    var points = computePositions(state.models, state.activeTab);
+    var points = computePositions(state.models);
     var h = '';
     if (!points.length) {
-      // "No dissent / all models agree" is a FINDING. With nothing on the
-      // board it was being printed as the empty state, so an app that had run
-      // nothing reported unanimity. Agreement can only be claimed once there
-      // are claims to agree.
-      var emptyTitle = !hasRun ? 'NO DATA' : (state.activeTab === 'dissent' ? 'NO DISSENT' : 'NO MODELS');
+      var emptyTitle = !hasRun ? 'NO DATA' : 'NO MODELS';
       var emptyBody = !hasRun
-        ? 'Send a prompt to collide minds.'
-        : (state.activeTab === 'dissent' ? 'One reading. Nothing sits outside it.' : 'Waiting for replies.');
+        ? 'Send a message to collide minds.'
+        : 'Waiting for replies.';
       h = '<div class="consensus-empty"><div class="title">'+emptyTitle+'</div><div>'+emptyBody+'</div></div>';
     } else {
       // Connection lines from each node to center
@@ -423,7 +391,7 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
         var pxDx = (cx - p.x) * 3.6, pxDy = (cy - p.y) * 6.6;
         var len = Math.hypot(pxDx, pxDy).toFixed(0) + 'px';
         var rot = (Math.atan2(pxDy, pxDx) * 180 / Math.PI).toFixed(1) + 'deg';
-        var color = p.isDissent ? 'rgba(255,100,90,0.45)' : 'rgba(120,160,240,0.4)';
+        var color = p.inConsensus ? 'rgba(120,160,240,0.4)' : 'rgba(255,100,90,0.45)';
         h += '<div class="node-link" style="left:'+p.x.toFixed(2)+'%;top:'+p.y.toFixed(2)+'%;width:'+len+';transform:rotate('+rot+');--link-color:'+color+'"></div>';
       });
 
@@ -470,26 +438,6 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
     }
     map.innerHTML = h;
 
-    if (diss) {
-      var dissModels = state.models.filter(function(m){ return !m.agree; });
-      if (dissModels.length === 0) {
-        // Same rule as the map's empty state: "full consensus achieved" is a
-        // result, and an empty board has not achieved one.
-        diss.innerHTML = !hasRun
-          ? '<div style="color:var(--text-tertiary);font-size:11px;padding:6px 4px;font-style:italic">Nothing has been collided yet.</div>'
-          : '<div style="color:var(--text-tertiary);font-size:11px;padding:6px 4px;font-style:italic">One reading. Nothing sits outside it.</div>';
-      } else {
-        diss.innerHTML = dissModels.map(function(m){
-          return '<div class="dissenter"><div class="dissenter-header"><div class="dissenter-dot" style="background:'+m.color+';box-shadow:0 0 6px '+m.color+'"></div><div class="dissenter-name">'+escapeHtml(m.label || m.id)+'</div><div class="dissenter-badge">DISSENT</div></div><div class="dissenter-text">'+escapeHtml(m.reply || '')+'</div></div>';
-        }).join('');
-      }
-    }
-
-    var tabD = document.getElementById('tabDissent');
-    if (tabD) tabD.classList.toggle('on', state.activeTab === 'dissent');
-    var tabT = document.getElementById('tabTotal');
-    if (tabT) tabT.classList.toggle('on', state.activeTab === 'total');
-
     var lbl = document.getElementById('btnToggleLabels');
     if (lbl) lbl.classList.toggle('on', !!state.labels);
   }
@@ -512,19 +460,23 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
       state.models = data.models || [];
       state.ratioN = data.ratioN || 0;
       state.ratioM = data.ratioM || 0;
+      // R17: the score is a count, e.g. "4/7", and an unfinished shared send
+      // carries an empty one. Never a percent, never a "waiting" line.
+      state.score = typeof data.score === 'string' ? data.score : '';
+      state.complete = !!data.complete;
+      state.consensusChains = data.consensusChains || 0;
+      state.consensusMaxChain = data.consensusMaxChain || 0;
+      state.excluded = data.excluded || [];
       state.hasRun = !!data.hasRun;
       state.summary = data.summary || '';
       state.nucleusSize = data.nucleusSize || 14;
       state.glowOpacity = typeof data.glowOpacity === 'number' ? data.glowOpacity : 0.15;
       state.glowRadius = typeof data.glowRadius === 'number' ? data.glowRadius : 14;
-      state.tieBecause = data.tieBecause || '';
       state.sizeScale = typeof data.sizeScale === 'number' ? data.sizeScale : 1;
       if (typeof data.labels === 'boolean') state.labels = data.labels;
-      if (data.activeTab === 'dissent' || data.activeTab === 'total') state.activeTab = data.activeTab;
       render();
     },
     setLabels: function(v) { state.labels = !!v; render(); },
-    setTab: function(t) { if (t === 'dissent' || t === 'total') { state.activeTab = t; render(); } },
   };
 
   window.addEventListener('message', function(ev) {
@@ -547,23 +499,8 @@ body{font-family:var(--font-sans);background:var(--bg-deep);color:var(--text-pri
       render();
       notify('labels', { value: state.labels });
     });
-
-    var bDis = document.getElementById('tabDissent');
-    if (bDis) bDis.addEventListener('click', function(){
-      state.activeTab = 'dissent';
-      render();
-      notify('tab', { value: state.activeTab });
-    });
-
-    var bTot = document.getElementById('tabTotal');
-    if (bTot) bTot.addEventListener('click', function(){
-      state.activeTab = 'total';
-      render();
-      notify('tab', { value: state.activeTab });
-    });
   }
 
-  renderStars();
   bind();
   render();
 })();

@@ -1,15 +1,14 @@
 {
- "at": "2026-10-12T21:49:58Z",
- "run": "38313044742",
+ "at": "2026-10-13T03:02:33Z",
+ "run": "38339778882",
  "results": [
   {
-   "id": "20261012T215000Z-v86",
+   "id": "20261013T030500Z-v911",
    "status": "applied",
-   "label": "v8.6 web",
+   "label": "v9.1.1 web",
    "written": [
     ".last_build_id",
     "404.html",
-    "artifacts",
     "assets",
     "canvaskit",
     "favicon.png",
@@ -20,15 +19,13 @@
     "index.html",
     "main.dart.js",
     "manifest.json",
-    "tools",
-    "vendor",
     "version.json"
    ],
    "removed": [
     "404.html"
    ],
-   "sha256": "3f6bd4b96cd80eb61107889c043975ece8015c2257efd35e984f3f8c48166f19",
-   "size": 20078627
+   "sha256": "4b21f4e8d0c35bec928e224c6607783dd03f917dcbddbc6d541b07240689a069",
+   "size": 14440363
   }
  ]
 }
