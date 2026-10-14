@@ -1,11 +1,11 @@
 {
- "at": "2026-10-14T07:22:56Z",
- "run": "38527931390",
+ "at": "2026-10-14T07:45:29Z",
+ "run": "38530404706",
  "results": [
   {
-   "id": "20261014T072140Z-v916d",
+   "id": "20261014T0800Z-v916f",
    "status": "applied",
-   "label": "v9.1.6d web",
+   "label": "v9.1.6f web",
    "written": [
     ".last_build_id",
     "404.html",
@@ -15,6 +15,7 @@
     "flutter.js",
     "flutter_bootstrap.js",
     "flutter_service_worker.js",
+    "fonts",
     "icons",
     "index.html",
     "main.dart.js",
@@ -24,8 +25,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "05cb0e8b3b954b8c5c337dd902e052f09ccc9b34791750be1e69f110e5fc6a48",
-   "size": 14435102
+   "sha256": "057ff12d078751475adb3b7224360e9def1852fac73e453c34fcfcf48e62c6c1",
+   "size": 14481051
   }
  ]
 }
