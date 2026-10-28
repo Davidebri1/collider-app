@@ -1,11 +1,11 @@
 {
- "at": "2026-10-14T08:44:18Z",
- "run": "38537223297",
+ "at": "2026-10-28T17:47:06Z",
+ "run": "40738962996",
  "results": [
   {
-   "id": "20261014T0905Z-v916h",
+   "id": "20261028T1440Z-v917",
    "status": "applied",
-   "label": "v9.1.6h web",
+   "label": "v9.1.7 web (Smart Gen)",
    "written": [
     ".last_build_id",
     "404.html",
@@ -25,8 +25,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "86053d48b933953b35399be40afcd08329ba04db755a1b1c789d3e8d98a12366",
-   "size": 14483073
+   "sha256": "a7ae1452514eca0224b3ae64796eef47dcce7943dc1f9bc193cc01e72cbf2d08",
+   "size": 14585023
   }
  ]
 }
