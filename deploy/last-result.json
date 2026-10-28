@@ -1,11 +1,11 @@
 {
- "at": "2026-10-28T17:47:06Z",
- "run": "40738962996",
+ "at": "2026-10-28T18:30:23Z",
+ "run": "40745717797",
  "results": [
   {
-   "id": "20261028T1440Z-v917",
+   "id": "20261028T1830Z-v918",
    "status": "applied",
-   "label": "v9.1.7 web (Smart Gen)",
+   "label": "v9.1.8 web (Smart Gen card colour)",
    "written": [
     ".last_build_id",
     "404.html",
@@ -25,8 +25,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "a7ae1452514eca0224b3ae64796eef47dcce7943dc1f9bc193cc01e72cbf2d08",
-   "size": 14585023
+   "sha256": "0dcc977f85c99545ca837952079ad0832d921d9344e02de3e0167570f6df8204",
+   "size": 14588768
   }
  ]
 }
