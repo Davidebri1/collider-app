@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T09:13:57Z",
- "run": "41031902722",
+ "at": "2026-10-30T09:43:32Z",
+ "run": "41035493615",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,9 +8,9 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "v920e",
+   "id": "v920f",
    "status": "applied",
-   "label": "v9.2.0 free-drag + snap toggle (R23)",
+   "label": "v9.2.0 complete \u2014 upright Smart Gen + live premium Set",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +30,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "38739f757fcba11720ddbdf343e4318fb755787ec5c4772bfda9034910b544ca",
-   "size": 14627442
+   "sha256": "085d1216b7325b3716154c3e7d2152d0a6cb3cbd03b799bd6728fa10d7eab108",
+   "size": 14628421
   }
  ]
 }
