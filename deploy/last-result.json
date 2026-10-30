@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T21:40:07Z",
- "run": "41132708879",
+ "at": "2026-10-30T22:05:56Z",
+ "run": "41135773447",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,9 +8,9 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "v920j",
+   "id": "v920k",
    "status": "applied",
-   "label": "v9.2.0 Home persist + Align + Music/Files/Video + media floor + OPENROUTER define",
+   "label": "v9.2.0 visible Home restore + in-app media + swipe chips + video thumbs",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +30,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "2a9cc1c2c669252e5c75df5a1f7fd00572ec240fdfc628d7c16766a30790c087",
-   "size": 14637079
+   "sha256": "f55075b65803835b048f2b9720124df590df17ab9ff50f902364dbfe4d622136",
+   "size": 14577024
   }
  ]
 }
