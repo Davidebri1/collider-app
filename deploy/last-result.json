@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T20:53:09Z",
- "run": "41126709508",
+ "at": "2026-10-30T21:40:07Z",
+ "run": "41132708879",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,9 +8,9 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "v920i",
+   "id": "v920j",
    "status": "applied",
-   "label": "v9.2.0 Pollinations queue+retry + live playtest fixes",
+   "label": "v9.2.0 Home persist + Align + Music/Files/Video + media floor + OPENROUTER define",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +30,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "cedec0e7c9f037d0fa58f0bfbd528bd4e08c6047d516cf4164149a179c38eb59",
-   "size": 14632566
+   "sha256": "2a9cc1c2c669252e5c75df5a1f7fd00572ec240fdfc628d7c16766a30790c087",
+   "size": 14637079
   }
  ]
 }
