@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T03:11:09Z",
- "run": "40995924988",
+ "at": "2026-10-30T03:16:05Z",
+ "run": "40996397243",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,9 +8,9 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "20261030T0315Z-v920c",
+   "id": "20261030T0320Z-v920d",
    "status": "applied",
-   "label": "v9.2.0 web (Smart Gen all views)",
+   "label": "v9.2.0 web (Storyboard and Vision board)",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +30,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "8ef191c24ad6f8c08f0ddc26b3659c0c1536f6910c4ad5c74ef0b924b2004256",
-   "size": 14625380
+   "sha256": "dd5779d5b902adb778c27ed1cc5a7b34c850d413d93dde82b8e41d5d5b59e3d1",
+   "size": 14625619
   }
  ]
 }
