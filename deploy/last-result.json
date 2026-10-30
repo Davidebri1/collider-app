@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T09:43:32Z",
- "run": "41035493615",
+ "at": "2026-10-30T20:16:51Z",
+ "run": "41121881688",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,14 +8,16 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "v920f",
+   "id": "v920h",
    "status": "applied",
-   "label": "v9.2.0 complete \u2014 upright Smart Gen + live premium Set",
+   "label": "v9.2.0 validated2 centred Genie + empty-app E2E",
    "written": [
     ".last_build_id",
     "404.html",
+    "CHECKLIST_RESULTS.md",
     "assets",
     "canvaskit",
+    "e2e",
     "favicon.png",
     "flutter.js",
     "flutter_bootstrap.js",
@@ -25,13 +27,14 @@
     "index.html",
     "main.dart.js",
     "manifest.json",
+    "review_sheet_v920h.png",
     "version.json"
    ],
    "removed": [
     "404.html"
    ],
-   "sha256": "085d1216b7325b3716154c3e7d2152d0a6cb3cbd03b799bd6728fa10d7eab108",
-   "size": 14628421
+   "sha256": "ee4313b28e81b86239ff5beea0774b459ff431c7e723d6a30b76743d5fc0d57f",
+   "size": 18064913
   }
  ]
 }
