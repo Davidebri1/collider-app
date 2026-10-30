@@ -1,6 +1,6 @@
 {
- "at": "2026-10-30T03:16:05Z",
- "run": "40996397243",
+ "at": "2026-10-30T09:13:57Z",
+ "run": "41031902722",
  "results": [
   {
    "id": "20261029T2355Z-v920",
@@ -8,9 +8,9 @@
    "error": "zip must contain index.html at the zip root"
   },
   {
-   "id": "20261030T0320Z-v920d",
+   "id": "v920e",
    "status": "applied",
-   "label": "v9.2.0 web (Storyboard and Vision board)",
+   "label": "v9.2.0 free-drag + snap toggle (R23)",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +30,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "dd5779d5b902adb778c27ed1cc5a7b34c850d413d93dde82b8e41d5d5b59e3d1",
-   "size": 14625619
+   "sha256": "38739f757fcba11720ddbdf343e4318fb755787ec5c4772bfda9034910b544ca",
+   "size": 14627442
   }
  ]
 }
