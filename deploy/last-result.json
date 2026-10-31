@@ -1,32 +1,37 @@
 {
- "at": "2026-10-31T03:40:26Z",
- "run": "41165370429",
- "results": [
-  {
-   "id": "v920n",
-   "status": "applied",
-   "label": "v9.2.0 unified: v920m providers + restore-live screens; FF-from-main tip",
-   "written": [
-    ".last_build_id",
-    "404.html",
-    "assets",
-    "canvaskit",
-    "favicon.png",
-    "flutter.js",
-    "flutter_bootstrap.js",
-    "flutter_service_worker.js",
-    "fonts",
-    "icons",
-    "index.html",
-    "main.dart.js",
-    "manifest.json",
-    "version.json"
-   ],
-   "removed": [
-    "404.html"
-   ],
-   "sha256": "019ec8d2653e7fe29411577b802ff56337c2fdf873b054d43792193bfd0b0645",
-   "size": 14637638
-  }
- ]
+  "at": "2026-10-31T04:16:08Z",
+  "run": "41167850644",
+  "results": [
+    {
+      "id": "auto-from-source-9d86a026d37b",
+      "status": "applied",
+      "label": "auto pull 9d86a026d37b",
+      "written": [
+        ".last_build_id",
+        "404.html",
+        "assets",
+        "canvaskit",
+        "favicon.png",
+        "flutter.js",
+        "flutter_bootstrap.js",
+        "flutter_service_worker.js",
+        "fonts",
+        "icons",
+        "index.html",
+        "main.dart.js",
+        "manifest.json",
+        "version.json"
+      ],
+      "removed": [
+        "404.html"
+      ],
+      "sha256": "67d928b3ad3e73e74bcc1980f86a66f971a5a70ef197adb89896f1eaedb53f32",
+      "size": 14637109
+    }
+  ],
+  "applied": "67d928b3ad3e73e74bcc1980f86a66f971a5a70ef197adb89896f1eaedb53f32",
+  "zip_sha256": "67d928b3ad3e73e74bcc1980f86a66f971a5a70ef197adb89896f1eaedb53f32",
+  "source_commit": "9d86a026d37b82871cb8eaed0f0f35ed945d342b",
+  "main_dart_js_sha256": "7f9bee5beb5fe6ce119d52736281fe1e4638e0bfa064d2ae2a66cc22d2282644",
+  "expected_main_dart_js_sha256": "7f9bee5beb5fe6ce119d52736281fe1e4638e0bfa064d2ae2a66cc22d2282644"
 }
