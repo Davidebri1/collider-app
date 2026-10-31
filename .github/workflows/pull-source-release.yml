@@ -1,0 +1,176 @@
+# Every ~5 minutes (and on demand): if collider-source's v9.2.0-smartgen release
+# has a newer zip than what we last applied, download, verify, deploy via apply.py,
+# and record live main.dart.js sha256 in deploy/last-result.json.
+# Same-repo pushes use GITHUB_TOKEN only — no new tokens.
+name: Pull collider-source release
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: collider-app-pull-source
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: Davidebri1/collider-source
+  RELEASE_TAG: v9.2.0-smartgen
+  ZIP_NAME: collider-9.2.0-web.zip
+  META_NAME: release-meta.json
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Read latest release meta from collider-source
+        id: meta
+        run: |
+          set -euo pipefail
+          META_URL="https://github.com/${SOURCE_REPO}/releases/download/${RELEASE_TAG}/${META_NAME}"
+          ZIP_URL="https://github.com/${SOURCE_REPO}/releases/download/${RELEASE_TAG}/${ZIP_NAME}"
+          echo "zip_url=$ZIP_URL" >> "$GITHUB_OUTPUT"
+          if ! curl -fsSL -o /tmp/release-meta.json "$META_URL"; then
+            echo "No release-meta.json yet; skip."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json, os, pathlib
+          m = json.loads(pathlib.Path('/tmp/release-meta.json').read_text())
+          for k in ('sha256', 'size', 'commit'):
+              if k not in m:
+                  raise SystemExit(f'meta missing {k}')
+          url = m.get('url') or os.environ['ZIP_URL']
+          out = os.environ['GITHUB_OUTPUT']
+          with open(out, 'a') as o:
+              o.write(f"sha256={m['sha256']}\n")
+              o.write(f"size={m['size']}\n")
+              o.write(f"url={url}\n")
+              o.write(f"commit={m['commit']}\n")
+              o.write(f"js_sha256={m.get('main_dart_js_sha256','')}\n")
+              o.write('skip=false\n')
+          print(json.dumps({k: m.get(k) for k in ('sha256','size','commit','main_dart_js_sha256')}, indent=2))
+          PY
+        env:
+          ZIP_URL: https://github.com/Davidebri1/collider-source/releases/download/v9.2.0-smartgen/collider-9.2.0-web.zip
+
+      - name: Skip if already live
+        id: gate
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          WANT: ${{ steps.meta.outputs.sha256 }}
+        run: |
+          set -euo pipefail
+          LAST=deploy/last-result.json
+          HAVE=""
+          if [[ -f "$LAST" ]]; then
+            HAVE=$(python3 - <<'PY'
+          import json
+          d=json.load(open('deploy/last-result.json'))
+          v=d.get('applied') or d.get('zip_sha256') or ''
+          if not v:
+              rs=d.get('results') or []
+              if rs: v=rs[-1].get('sha256') or ''
+          print(v)
+          PY
+          )
+          fi
+          if [[ -n "$HAVE" && "$HAVE" == "$WANT" ]]; then
+            echo "Already live sha256=$WANT"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Stage deploy request for apply.py
+        if: steps.meta.outputs.skip != 'true' && steps.gate.outputs.skip != 'true'
+        env:
+          META_SHA: ${{ steps.meta.outputs.sha256 }}
+          META_SIZE: ${{ steps.meta.outputs.size }}
+          META_URL: ${{ steps.meta.outputs.url }}
+          META_COMMIT: ${{ steps.meta.outputs.commit }}
+        run: |
+          set -euo pipefail
+          mkdir -p deploy/requests
+          rm -f deploy/requests/auto-from-source*.json
+          python3 - <<'PY'
+          import json, os, pathlib
+          req = {
+            'id': f"auto-from-source-{os.environ['META_COMMIT'][:12]}",
+            'label': f"auto pull {os.environ['META_COMMIT'][:12]}",
+            'url': os.environ['META_URL'],
+            'sha256': os.environ['META_SHA'],
+            'size': int(os.environ['META_SIZE']),
+          }
+          path = pathlib.Path('deploy/requests/auto-from-source.json')
+          path.write_text(json.dumps(req, indent=2) + '\n')
+          print(path.read_text())
+          PY
+
+      - name: Apply deploy request
+        id: apply
+        if: steps.meta.outputs.skip != 'true' && steps.gate.outputs.skip != 'true'
+        run: python3 .github/deploy/apply.py
+
+      - name: Record live main.dart.js sha256
+        if: steps.meta.outputs.skip != 'true' && steps.gate.outputs.skip != 'true' && steps.apply.outputs.changed == 'true'
+        env:
+          ZIP_SHA: ${{ steps.meta.outputs.sha256 }}
+          SRC_COMMIT: ${{ steps.meta.outputs.commit }}
+          EXPECT_JS: ${{ steps.meta.outputs.js_sha256 }}
+        run: |
+          set -euo pipefail
+          test -f main.dart.js
+          export LIVE
+          LIVE=$(sha256sum main.dart.js | awk '{print $1}')
+          python3 - <<'PY'
+          import json, os, pathlib
+          from datetime import datetime, timezone
+          p = pathlib.Path('deploy/last-result.json')
+          d = json.loads(p.read_text()) if p.exists() else {}
+          d['at'] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+          d['run'] = os.environ.get('GITHUB_RUN_ID')
+          d['applied'] = os.environ['ZIP_SHA']
+          d['zip_sha256'] = os.environ['ZIP_SHA']
+          d['source_commit'] = os.environ['SRC_COMMIT']
+          d['main_dart_js_sha256'] = os.environ['LIVE']
+          d['expected_main_dart_js_sha256'] = os.environ.get('EXPECT_JS') or ''
+          p.write_text(json.dumps(d, indent=2) + '\n')
+          print(json.dumps(d, indent=2))
+          PY
+
+      - name: Commit and push
+        if: steps.meta.outputs.skip != 'true' && steps.gate.outputs.skip != 'true' && steps.apply.outputs.changed == 'true'
+        env:
+          MSG: ${{ steps.apply.outputs.message }}
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -q -m "${MSG:-Collider app deploy from collider-source release}"
+          for i in 1 2 3; do git push origin HEAD:main && break; git pull --rebase -q origin main; done
+
+      - name: Request a Pages build
+        if: steps.meta.outputs.skip != 'true' && steps.gate.outputs.skip != 'true' && steps.apply.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+
+      - name: Fail if a request was rejected
+        if: steps.apply.outputs.rejected == 'true'
+        run: |
+          cat deploy/last-result.json || true
+          exit 1
