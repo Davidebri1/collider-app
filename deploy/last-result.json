@@ -1,16 +1,11 @@
 {
- "at": "2026-10-30T22:05:56Z",
- "run": "41135773447",
+ "at": "2026-10-31T03:40:26Z",
+ "run": "41165370429",
  "results": [
   {
-   "id": "20261029T2355Z-v920",
-   "status": "rejected",
-   "error": "zip must contain index.html at the zip root"
-  },
-  {
-   "id": "v920k",
+   "id": "v920n",
    "status": "applied",
-   "label": "v9.2.0 visible Home restore + in-app media + swipe chips + video thumbs",
+   "label": "v9.2.0 unified: v920m providers + restore-live screens; FF-from-main tip",
    "written": [
     ".last_build_id",
     "404.html",
@@ -30,8 +25,8 @@
    "removed": [
     "404.html"
    ],
-   "sha256": "f55075b65803835b048f2b9720124df590df17ab9ff50f902364dbfe4d622136",
-   "size": 14577024
+   "sha256": "019ec8d2653e7fe29411577b802ff56337c2fdf873b054d43792193bfd0b0645",
+   "size": 14637638
   }
  ]
 }
